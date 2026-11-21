@@ -1,0 +1,827 @@
+{
+  "_source": "Extracted by tools/extract_fm27_tactics.py from the installed FM27 (ui-staticdataentries bundle + global-metadata.dat + example.ltf).",
+  "in_possession_roles": [
+    {
+      "id": "AdvancedPlaymaker",
+      "name": "Advanced Playmaker"
+    },
+    {
+      "id": "AdvancedWingBack",
+      "name": "Advanced Wing-Back"
+    },
+    {
+      "id": "AttackingMidfielder",
+      "name": "Attacking Midfielder"
+    },
+    {
+      "id": "BallPlayingCentreBack",
+      "name": "Ball-Playing Centre-Back"
+    },
+    {
+      "id": "BallPlayingGoalkeeper",
+      "name": "Ball-Playing Goalkeeper"
+    },
+    {
+      "id": "BoxToBoxMidfielder",
+      "name": "Box-To-Box Midfielder"
+    },
+    {
+      "id": "BoxToBoxPlaymaker",
+      "name": "Box-To-Box Playmaker"
+    },
+    {
+      "id": "CentreBack",
+      "name": "Centre-Back"
+    },
+    {
+      "id": "CentralMidfielder",
+      "name": "Central Midfielder"
+    },
+    {
+      "id": "CentreForward",
+      "name": "Centre Forward"
+    },
+    {
+      "id": "ChannelForward",
+      "name": "Channel Forward"
+    },
+    {
+      "id": "ChannelMidfielder",
+      "name": "Channel Midfielder"
+    },
+    {
+      "id": "DeepLyingForward",
+      "name": "Deep-Lying Forward"
+    },
+    {
+      "id": "DeepLyingPlaymaker",
+      "name": "Deep-Lying Playmaker"
+    },
+    {
+      "id": "DefensiveMidfielder",
+      "name": "Defensive Midfielder"
+    },
+    {
+      "id": "FalseNine",
+      "name": "False Nine"
+    },
+    {
+      "id": "FullBack",
+      "name": "Full-Back"
+    },
+    {
+      "id": "Goalkeeper",
+      "name": "Goalkeeper"
+    },
+    {
+      "id": "HalfBack",
+      "name": "Half Back"
+    },
+    {
+      "id": "InsideForward",
+      "name": "Inside Forward"
+    },
+    {
+      "id": "InsideFullBack",
+      "name": "Inside Full-Back"
+    },
+    {
+      "id": "InsideWingBack",
+      "name": "Inside Wing-Back"
+    },
+    {
+      "id": "InsideWinger",
+      "name": "Inside Winger"
+    },
+    {
+      "id": "AdvancedCentreBack",
+      "name": "Advanced Centre-Back"
+    },
+    {
+      "id": "MidfieldPlaymaker",
+      "name": "Midfield Playmaker"
+    },
+    {
+      "id": "NoNonsenseCentreBack",
+      "name": "No-Nonsense Centre-Back"
+    },
+    {
+      "id": "NoNonsenseGoalkeeper",
+      "name": "No-Nonsense Goalkeeper"
+    },
+    {
+      "id": "OverlappingCentreBack",
+      "name": "Overlapping Centre-Back"
+    },
+    {
+      "id": "PlaymakingWingBack",
+      "name": "Playmaking Wing-Back"
+    },
+    {
+      "id": "Poacher",
+      "name": "Poacher"
+    },
+    {
+      "id": "SecondStriker",
+      "name": "Second Striker"
+    },
+    {
+      "id": "TargetForward",
+      "name": "Target Forward"
+    },
+    {
+      "id": "FreeRole",
+      "name": "Free Role"
+    },
+    {
+      "id": "WideCentreBack",
+      "name": "Wide Centre-Back"
+    },
+    {
+      "id": "WideCentralMidfielder",
+      "name": "Wide Central Midfielder"
+    },
+    {
+      "id": "WideForward",
+      "name": "Wide Forward"
+    },
+    {
+      "id": "WideMidfielder",
+      "name": "Wide Midfielder"
+    },
+    {
+      "id": "PlaymakingWinger",
+      "name": "Playmaking Winger"
+    },
+    {
+      "id": "WingBack",
+      "name": "Wing-Back"
+    },
+    {
+      "id": "Winger",
+      "name": "Winger"
+    }
+  ],
+  "out_of_possession_roles": [
+    {
+      "id": "OPAttackingMidfielder",
+      "name": "Attacking Midfielder"
+    },
+    {
+      "id": "OPCentralMidfielder",
+      "name": "Central Midfielder"
+    },
+    {
+      "id": "OPCentralOutletCentreForward",
+      "name": "Central Outlet Centre Forward"
+    },
+    {
+      "id": "OPCentralOutletAttackingMidfielder",
+      "name": "Central Outlet Attacking Midfielder"
+    },
+    {
+      "id": "OPCentreBack",
+      "name": "Centre-Back"
+    },
+    {
+      "id": "OPCentreForward",
+      "name": "Centre Forward"
+    },
+    {
+      "id": "OPCoveringCentreBack",
+      "name": "Covering Centre-Back"
+    },
+    {
+      "id": "OPCoveringWideCentreBack",
+      "name": "Covering Wide Centre-Back"
+    },
+    {
+      "id": "OPDefensiveMidfielder",
+      "name": "Defensive Midfielder"
+    },
+    {
+      "id": "OPDroppingDefensiveMidfielder",
+      "name": "Dropping Defensive Midfielder"
+    },
+    {
+      "id": "OPFullBack",
+      "name": "Full-Back"
+    },
+    {
+      "id": "OPGoalkeeper",
+      "name": "Goalkeeper"
+    },
+    {
+      "id": "OPHoldingFullBack",
+      "name": "Holding Full-Back"
+    },
+    {
+      "id": "OPHoldingWingBack",
+      "name": "Holding Wing-Back"
+    },
+    {
+      "id": "OPInsideOutletWinger",
+      "name": "Inside Outlet Winger"
+    },
+    {
+      "id": "OPLineKeeper",
+      "name": "Line-Holding Goalkeeper"
+    },
+    {
+      "id": "OPPressingCentralMidfielder",
+      "name": "Pressing Central Midfielder"
+    },
+    {
+      "id": "OPPressingDefensiveMidfielder",
+      "name": "Pressing Defensive Midfielder"
+    },
+    {
+      "id": "OPPressingFullBack",
+      "name": "Pressing Full-Back"
+    },
+    {
+      "id": "OPPressingWingBack",
+      "name": "Pressing Wing-Back"
+    },
+    {
+      "id": "OPScreeningCentralMidfielder",
+      "name": "Screening Central Midfielder"
+    },
+    {
+      "id": "OPScreeningDefensiveMidfielder",
+      "name": "Screening Defensive Midfielder"
+    },
+    {
+      "id": "OPSplittingOutletAttackingMidfielder",
+      "name": "Splitting Outlet Attacking Midfielder"
+    },
+    {
+      "id": "OPSplittingOutletCentreForward",
+      "name": "Splitting Outlet Centre Forward"
+    },
+    {
+      "id": "OPStoppingCentreBack",
+      "name": "Stopping Centre-Back"
+    },
+    {
+      "id": "OPStoppingWideCentreBack",
+      "name": "Stopping Wide Centre-Back"
+    },
+    {
+      "id": "OPSweeperKeeper",
+      "name": "Sweeper Keeper"
+    },
+    {
+      "id": "OPTrackingAttackingMidfielder",
+      "name": "Tracking Attacking Midfielder"
+    },
+    {
+      "id": "OPTrackingCentreForward",
+      "name": "Tracking Centre Forward"
+    },
+    {
+      "id": "OPTrackingWideMidfielder",
+      "name": "Tracking Wide Midfielder"
+    },
+    {
+      "id": "OPTrackingWinger",
+      "name": "Tracking Winger"
+    },
+    {
+      "id": "OPWideCentreBack",
+      "name": "Wide Centre-Back"
+    },
+    {
+      "id": "OPWideCoverCentralMidfielder",
+      "name": "Wide Covering Central Midfielder"
+    },
+    {
+      "id": "OPWideCoverDefensiveMidfielder",
+      "name": "Wide Covering Defensive Midfielder"
+    },
+    {
+      "id": "OPWideMidfielder",
+      "name": "Wide Midfielder"
+    },
+    {
+      "id": "OPWideOutletWideMidfielder",
+      "name": "Wide Outlet Wide Midfielder"
+    },
+    {
+      "id": "OPWideOutletWinger",
+      "name": "Wide Outlet Winger"
+    },
+    {
+      "id": "OPWingBack",
+      "name": "Wing-Back"
+    },
+    {
+      "id": "OPWinger",
+      "name": "Winger"
+    }
+  ],
+  "team_instructions": [
+    {
+      "id": "PassingDirectness",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Directness",
+      "options": [
+        "Much Shorter",
+        "Shorter",
+        "Standard",
+        "More Direct",
+        "Much More Direct"
+      ]
+    },
+    {
+      "id": "Tempo",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Tempo",
+      "options": [
+        "Much Lower",
+        "Lower",
+        "Standard",
+        "Higher",
+        "Much Higher"
+      ]
+    },
+    {
+      "id": "AttackingWidth",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Team Width",
+      "options": [
+        "Much Narrower",
+        "Narrower",
+        "Standard",
+        "Wider",
+        "Much Wider"
+      ]
+    },
+    {
+      "id": "AttackingTransition",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Attacking Transition",
+      "options": [
+        "Hold Shape",
+        "Standard",
+        "Counter-Attack"
+      ]
+    },
+    {
+      "id": "CreativeFreedom",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Creative Freedom",
+      "options": [
+        "More Disciplined",
+        "Balanced",
+        "More Expressive"
+      ]
+    },
+    {
+      "id": "TimeWasting",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Time Wasting",
+      "options": [
+        "Less Often",
+        "Standard",
+        "More Often"
+      ]
+    },
+    {
+      "id": "PlayForSetPieces",
+      "section": "In Possession",
+      "phase": "Overview",
+      "title": "Play for Set Pieces",
+      "options": [
+        "Keep Ball in Play",
+        "Play for Set Pieces"
+      ]
+    },
+    {
+      "id": "Dribbling",
+      "section": "In Possession",
+      "phase": "Final Third",
+      "title": "Dribbling",
+      "options": [
+        "Discourage",
+        "Standard",
+        "Encourage"
+      ]
+    },
+    {
+      "id": "Patience",
+      "section": "In Possession",
+      "phase": "Final Third",
+      "title": "Patience",
+      "options": [
+        "Hit Early Crosses",
+        "Standard",
+        "Work Ball Into Box"
+      ]
+    },
+    {
+      "id": "ShotsFromDistance",
+      "section": "In Possession",
+      "phase": "Final Third",
+      "title": "Shots from Distance",
+      "options": [
+        "Discourage",
+        "Balanced",
+        "Encourage"
+      ]
+    },
+    {
+      "id": "Crossing",
+      "section": "In Possession",
+      "phase": "Final Third",
+      "title": "Crossing Style",
+      "options": [
+        "Balanced",
+        "Floated Crosses",
+        "Whipped Crosses",
+        "Low Crosses"
+      ]
+    },
+    {
+      "id": "SupportingRuns",
+      "section": "In Possession",
+      "phase": "Progression",
+      "title": "Supporting Runs",
+      "options": [
+        "Balanced",
+        "Underlap Left Flank",
+        "Underlap Right Flank",
+        "Underlap Both Flanks"
+      ]
+    },
+    {
+      "id": "Dribbling",
+      "section": "In Possession",
+      "phase": "Progression",
+      "title": "Dribbling",
+      "options": [
+        "Discourage",
+        "Standard",
+        "Encourage"
+      ]
+    },
+    {
+      "id": "ProgressThrough",
+      "section": "In Possession",
+      "phase": "Progression",
+      "title": "Progress Through",
+      "options": [
+        "Balanced",
+        "Progress Through the Middle",
+        "Progress Through Left Flank",
+        "Progress Through Right Flank",
+        "Progress Through Both Flanks"
+      ]
+    },
+    {
+      "id": "PassReception",
+      "section": "In Possession",
+      "phase": "Progression",
+      "title": "Pass Reception",
+      "options": [
+        "Pass Into Feet",
+        "Standard",
+        "Pass Into Space"
+      ]
+    },
+    {
+      "id": "BuildUpStrategy",
+      "section": "In Possession",
+      "phase": "Build-Up",
+      "title": "Build-Up Strategy",
+      "options": [
+        "Play Through Press",
+        "Balanced",
+        "Bypass Press"
+      ]
+    },
+    {
+      "id": "GoalKicks",
+      "section": "In Possession",
+      "phase": "Build-Up",
+      "title": "Goal Kicks",
+      "options": [
+        "Short",
+        "Mixed",
+        "Long"
+      ]
+    },
+    {
+      "id": "GoalkeeperDistributionSpeed",
+      "section": "In Possession",
+      "phase": "Build-Up",
+      "title": "GK Distribution (Speed)",
+      "options": [
+        "Slow Pace Down",
+        "Balanced",
+        "Distribute Quickly"
+      ]
+    },
+    {
+      "id": "GoalkeeperDistributionTarget",
+      "section": "In Possession",
+      "phase": "Build-Up",
+      "title": "GK Distribution",
+      "options": [
+        "Balanced",
+        "Distribute to Centre-Backs",
+        "Distribute To Full-Backs",
+        "Distribute to Flanks",
+        "Distribute to Playmaker",
+        "Distribute to Target Forward",
+        "Distribute Over Opposition Defence"
+      ]
+    },
+    {
+      "id": "LineOfEngagement",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Line of Engagement",
+      "options": [
+        "Low Block",
+        "Mid Block",
+        "High Press"
+      ]
+    },
+    {
+      "id": "DefensiveLine",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Defensive Line",
+      "options": [
+        "Much Lower",
+        "Lower",
+        "Standard",
+        "Higher",
+        "Much Higher"
+      ]
+    },
+    {
+      "id": "DefensiveLineBehaviour",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Defensive Line Behaviour",
+      "options": [
+        "Step Up More",
+        "Balanced",
+        "Drop Off More"
+      ]
+    },
+    {
+      "id": "TriggerPress",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Trigger Press",
+      "options": [
+        "Much Less Often",
+        "Less Often",
+        "Standard",
+        "More Often",
+        "Much More Often"
+      ]
+    },
+    {
+      "id": "DefensiveTransition",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Defensive Transition",
+      "options": [
+        "Regroup",
+        "Standard",
+        "Counter-Press"
+      ]
+    },
+    {
+      "id": "Tackling",
+      "section": "Out of Possession",
+      "phase": "Overview",
+      "title": "Tackling",
+      "options": [
+        "Ease Off Tackles",
+        "Standard",
+        "Tackle Harder"
+      ]
+    },
+    {
+      "id": "PressingTrap",
+      "section": "Out of Possession",
+      "phase": "High Press",
+      "title": "Pressing Trap",
+      "options": [
+        "Trap Inside",
+        "Balanced",
+        "Trap Outside"
+      ]
+    },
+    {
+      "id": "PreventShortGKDistribution",
+      "section": "Out of Possession",
+      "phase": "High Press",
+      "title": "Prevent Short GK Distribution",
+      "options": [
+        "No",
+        "Yes"
+      ]
+    },
+    {
+      "id": "PressingTrap",
+      "section": "Out of Possession",
+      "phase": "Mid Block",
+      "title": "Pressing Trap",
+      "options": [
+        "Trap Inside",
+        "Balanced",
+        "Trap Outside"
+      ]
+    },
+    {
+      "id": "CrossEngagement",
+      "section": "Out of Possession",
+      "phase": "Low Block",
+      "title": "Cross Engagement",
+      "options": [
+        "Stop Crosses",
+        "Balanced",
+        "Invite Crosses"
+      ]
+    }
+  ],
+  "player_instructions": [
+    {
+      "id": "AttackingWidth",
+      "title": "Attacking Width",
+      "options": [
+        "Stay Wider",
+        "Sit Narrower",
+        "Move Into Channels",
+        "Standard"
+      ]
+    },
+    {
+      "id": "DribblingDirection",
+      "title": "Dribbling Direction",
+      "options": [
+        "Run Wide With Ball",
+        "Cut Inside With Ball",
+        "Standard"
+      ]
+    },
+    {
+      "id": "DribblingFrequency",
+      "title": "Dribbling Frequency",
+      "options": [
+        "Dribble More",
+        "Dribble Less",
+        "Standard"
+      ]
+    },
+    {
+      "id": "ForwardRuns",
+      "title": "Forward Runs",
+      "options": [
+        "Make More Runs",
+        "Standard",
+        "Make Fewer Runs"
+      ]
+    },
+    {
+      "id": "FreedomOfMovement",
+      "title": "Freedom of Movement",
+      "options": [
+        "Roam From Position",
+        "Follow Tactical Position"
+      ]
+    },
+    {
+      "id": "Shooting",
+      "title": "Shooting",
+      "options": [
+        "Shoot More Often",
+        "Shoot Less Often",
+        "Standard"
+      ]
+    },
+    {
+      "id": "HoldUpBall",
+      "title": "Hold Up Ball",
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "PassingStrategy",
+      "title": "Passing Strategy",
+      "options": [
+        "Shorter",
+        "More Direct",
+        "Standard"
+      ]
+    },
+    {
+      "id": "PassingRisk",
+      "title": "Passing Risk",
+      "options": [
+        "Take More Risks",
+        "Take Fewer Risks",
+        "Standard"
+      ]
+    },
+    {
+      "id": "CrossingStrategy",
+      "title": "Crossing Strategy",
+      "options": [
+        "Cross to Far Post",
+        "Cross to Centre",
+        "Cross to Near Post",
+        "Cross to Target Forward",
+        "Standard"
+      ]
+    },
+    {
+      "id": "CrossFrom",
+      "title": "Cross From",
+      "options": [
+        "Cross From Deep",
+        "Byline",
+        "Standard"
+      ]
+    },
+    {
+      "id": "TriggerPress",
+      "title": "Trigger Press",
+      "options": [
+        "More Often",
+        "Less Often",
+        "Standard"
+      ]
+    },
+    {
+      "id": "Marking",
+      "title": "Marking",
+      "options": [
+        "Mark Tighter",
+        "Standard"
+      ]
+    },
+    {
+      "id": "Tackling",
+      "title": "Tackling",
+      "options": [
+        "Tackle Harder",
+        "Ease Off Tackles",
+        "Standard"
+      ]
+    },
+    {
+      "id": "MarkingTarget",
+      "title": "Marking Target",
+      "options": [
+        "Mark Specific",
+        "Mark Position",
+        "Standard"
+      ]
+    },
+    {
+      "id": "AttackBoxSide",
+      "title": "Attack Box - Side",
+      "options": [
+        "Centre",
+        "Left",
+        "Right",
+        "Near Post",
+        "Far Post",
+        "Standard"
+      ]
+    },
+    {
+      "id": "AttackBoxDepth",
+      "title": "Attack Box - Depth",
+      "options": [
+        "Attack Defensive Line",
+        "Arrive Late in Box",
+        "Standard"
+      ]
+    }
+  ],
+  "mentalities": [
+    "Very Defensive",
+    "Defensive",
+    "Cautious",
+    "Balanced",
+    "Positive",
+    "Attacking",
+    "Very Attacking"
+  ]
+}

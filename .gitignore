@@ -1,0 +1,56 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# --- Virtual environments -------------------------------------------------
+.venv/
+venv/
+env/
+
+# --- Build output (installers are published on GitHub Releases, not in git)
+dist/
+build/*
+!build/tacticfy.spec
+!build/installer.iss
+*.spec.bak
+
+# --- Runtime / logs -------------------------------------------------------
+logs/
+*.log
+
+# --- Personal data: local calibration overlay, save/memory dumps, imports --
+config/offsets.user.json
+config/*.backup.json
+*.dmp
+*.dump
+*.bin
+*.fm
+*.sav
+dumps/
+memdumps/
+squad_export*.csv
+squad_export*.json
+*.rtf
+squad*.html
+exports/
+my_squad*.*
+
+# --- Local / temp / editor files -------------------------------------------
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+.claude/
+*.local.*

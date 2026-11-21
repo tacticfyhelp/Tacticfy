@@ -1,0 +1,275 @@
+{
+  "Goalkeeper": {
+    "slot_group": "GK",
+    "primary": ["reflexes", "handling", "positioning", "one_on_ones", "concentration", "command_of_area"],
+    "secondary": ["aerial_reach", "communication", "decisions"],
+    "x": 50,
+    "y": 5
+  },
+  "Sweeper Keeper": {
+    "slot_group": "GK",
+    "primary": ["rushing_out", "one_on_ones", "anticipation", "acceleration", "reflexes", "decisions"],
+    "secondary": ["command_of_area", "positioning", "composure"],
+    "x": 50,
+    "y": 10
+  },
+  "Line-Holding Goalkeeper": {
+    "slot_group": "GK",
+    "primary": ["reflexes", "handling", "positioning", "aerial_reach", "concentration"],
+    "secondary": ["command_of_area", "one_on_ones", "communication"],
+    "x": 50,
+    "y": 4
+  },
+  "Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["marking", "tackling", "positioning", "heading", "anticipation", "concentration"],
+    "secondary": ["strength", "jumping_reach", "bravery", "decisions"],
+    "x": 50,
+    "y": 20
+  },
+  "Stopping Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["tackling", "aggression", "bravery", "anticipation", "strength", "acceleration"],
+    "secondary": ["marking", "heading", "decisions", "pace"],
+    "x": 50,
+    "y": 26
+  },
+  "Covering Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["positioning", "anticipation", "pace", "concentration", "decisions", "marking"],
+    "secondary": ["acceleration", "composure", "tackling"],
+    "x": 50,
+    "y": 16
+  },
+  "Wide Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["marking", "tackling", "positioning", "pace", "anticipation", "concentration"],
+    "secondary": ["heading", "strength", "decisions"],
+    "x": 34,
+    "y": 20
+  },
+  "Stopping Wide Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["tackling", "aggression", "bravery", "acceleration", "anticipation", "strength"],
+    "secondary": ["marking", "pace", "decisions"],
+    "x": 32,
+    "y": 26
+  },
+  "Covering Wide Centre-Back": {
+    "slot_group": "DC",
+    "primary": ["positioning", "pace", "anticipation", "concentration", "marking", "decisions"],
+    "secondary": ["acceleration", "tackling"],
+    "x": 34,
+    "y": 16
+  },
+  "Full-Back": {
+    "slot_group": "FB",
+    "primary": ["marking", "tackling", "positioning", "pace", "concentration", "anticipation"],
+    "secondary": ["teamwork", "work_rate", "stamina"],
+    "x": 14,
+    "y": 24
+  },
+  "Pressing Full-Back": {
+    "slot_group": "FB",
+    "primary": ["work_rate", "stamina", "pace", "acceleration", "tackling", "aggression"],
+    "secondary": ["anticipation", "teamwork", "bravery"],
+    "x": 16,
+    "y": 40
+  },
+  "Holding Full-Back": {
+    "slot_group": "FB",
+    "primary": ["positioning", "marking", "concentration", "tackling", "decisions", "anticipation"],
+    "secondary": ["strength", "heading"],
+    "x": 18,
+    "y": 20
+  },
+  "Wing-Back": {
+    "slot_group": "FB",
+    "primary": ["tackling", "marking", "stamina", "pace", "work_rate", "positioning"],
+    "secondary": ["acceleration", "anticipation", "teamwork"],
+    "x": 12,
+    "y": 28
+  },
+  "Pressing Wing-Back": {
+    "slot_group": "FB",
+    "primary": ["work_rate", "stamina", "pace", "acceleration", "tackling", "aggression"],
+    "secondary": ["anticipation", "teamwork", "bravery"],
+    "x": 12,
+    "y": 44
+  },
+  "Holding Wing-Back": {
+    "slot_group": "FB",
+    "primary": ["positioning", "marking", "concentration", "tackling", "decisions", "anticipation"],
+    "secondary": ["strength", "pace"],
+    "x": 12,
+    "y": 20
+  },
+  "Defensive Midfielder": {
+    "slot_group": "DM",
+    "primary": ["positioning", "tackling", "anticipation", "concentration", "teamwork", "decisions"],
+    "secondary": ["marking", "work_rate", "strength"],
+    "x": 50,
+    "y": 34
+  },
+  "Dropping Defensive Midfielder": {
+    "slot_group": "DM",
+    "primary": ["positioning", "marking", "tackling", "heading", "concentration", "strength"],
+    "secondary": ["anticipation", "decisions", "jumping_reach"],
+    "x": 50,
+    "y": 24
+  },
+  "Pressing Defensive Midfielder": {
+    "slot_group": "DM",
+    "primary": ["work_rate", "stamina", "tackling", "aggression", "acceleration", "anticipation"],
+    "secondary": ["teamwork", "bravery", "pace"],
+    "x": 50,
+    "y": 44
+  },
+  "Screening Defensive Midfielder": {
+    "slot_group": "DM",
+    "primary": ["positioning", "anticipation", "concentration", "decisions", "teamwork", "marking"],
+    "secondary": ["tackling", "composure"],
+    "x": 50,
+    "y": 32
+  },
+  "Wide Covering Defensive Midfielder": {
+    "slot_group": "DM",
+    "primary": ["work_rate", "stamina", "pace", "tackling", "positioning", "teamwork"],
+    "secondary": ["anticipation", "marking"],
+    "x": 34,
+    "y": 34
+  },
+  "Central Midfielder": {
+    "slot_group": "CM",
+    "primary": ["work_rate", "teamwork", "tackling", "positioning", "stamina", "decisions"],
+    "secondary": ["anticipation", "concentration"],
+    "x": 40,
+    "y": 46
+  },
+  "Pressing Central Midfielder": {
+    "slot_group": "CM",
+    "primary": ["work_rate", "stamina", "aggression", "tackling", "acceleration", "anticipation"],
+    "secondary": ["teamwork", "bravery", "pace"],
+    "x": 42,
+    "y": 56
+  },
+  "Screening Central Midfielder": {
+    "slot_group": "CM",
+    "primary": ["positioning", "anticipation", "concentration", "decisions", "teamwork", "marking"],
+    "secondary": ["tackling"],
+    "x": 42,
+    "y": 42
+  },
+  "Wide Covering Central Midfielder": {
+    "slot_group": "CM",
+    "primary": ["work_rate", "stamina", "pace", "tackling", "positioning", "teamwork"],
+    "secondary": ["anticipation", "marking", "acceleration"],
+    "x": 30,
+    "y": 44
+  },
+  "Wide Midfielder": {
+    "slot_group": "W",
+    "primary": ["work_rate", "teamwork", "positioning", "stamina", "tackling", "concentration"],
+    "secondary": ["marking", "anticipation", "decisions", "pace"],
+    "x": 16,
+    "y": 46
+  },
+  "Tracking Wide Midfielder": {
+    "slot_group": "W",
+    "primary": ["work_rate", "stamina", "teamwork", "tackling", "marking", "positioning"],
+    "secondary": ["pace", "concentration", "decisions"],
+    "x": 14,
+    "y": 34
+  },
+  "Wide Outlet Wide Midfielder": {
+    "slot_group": "W",
+    "primary": ["pace", "acceleration", "off_the_ball", "anticipation", "stamina"],
+    "secondary": ["work_rate", "decisions"],
+    "x": 14,
+    "y": 58
+  },
+  "Winger": {
+    "slot_group": "W",
+    "primary": ["work_rate", "stamina", "teamwork", "pace", "positioning", "acceleration"],
+    "secondary": ["tackling", "anticipation"],
+    "x": 16,
+    "y": 56
+  },
+  "Tracking Winger": {
+    "slot_group": "W",
+    "primary": ["work_rate", "stamina", "teamwork", "tackling", "marking", "pace"],
+    "secondary": ["positioning", "acceleration"],
+    "x": 14,
+    "y": 42
+  },
+  "Inside Outlet Winger": {
+    "slot_group": "W",
+    "primary": ["off_the_ball", "pace", "acceleration", "anticipation", "decisions"],
+    "secondary": ["work_rate", "stamina", "composure"],
+    "x": 30,
+    "y": 64
+  },
+  "Wide Outlet Winger": {
+    "slot_group": "W",
+    "primary": ["pace", "acceleration", "off_the_ball", "anticipation", "stamina"],
+    "secondary": ["decisions", "work_rate"],
+    "x": 14,
+    "y": 66
+  },
+  "Attacking Midfielder": {
+    "slot_group": "AM",
+    "primary": ["work_rate", "teamwork", "positioning", "anticipation", "stamina", "decisions"],
+    "secondary": ["tackling", "concentration"],
+    "x": 50,
+    "y": 62
+  },
+  "Tracking Attacking Midfielder": {
+    "slot_group": "AM",
+    "primary": ["work_rate", "stamina", "teamwork", "tackling", "positioning", "marking"],
+    "secondary": ["anticipation", "decisions"],
+    "x": 50,
+    "y": 52
+  },
+  "Central Outlet Attacking Midfielder": {
+    "slot_group": "AM",
+    "primary": ["off_the_ball", "anticipation", "decisions", "pace", "acceleration"],
+    "secondary": ["composure", "first_touch"],
+    "x": 50,
+    "y": 68
+  },
+  "Splitting Outlet Attacking Midfielder": {
+    "slot_group": "AM",
+    "primary": ["off_the_ball", "pace", "acceleration", "anticipation", "stamina"],
+    "secondary": ["decisions", "dribbling"],
+    "x": 34,
+    "y": 70
+  },
+  "Centre Forward": {
+    "slot_group": "ST",
+    "primary": ["work_rate", "stamina", "teamwork", "aggression", "anticipation", "acceleration"],
+    "secondary": ["pace", "bravery", "decisions"],
+    "x": 50,
+    "y": 76
+  },
+  "Tracking Centre Forward": {
+    "slot_group": "ST",
+    "primary": ["work_rate", "stamina", "teamwork", "tackling", "positioning", "anticipation"],
+    "secondary": ["decisions", "aggression"],
+    "x": 50,
+    "y": 64
+  },
+  "Central Outlet Centre Forward": {
+    "slot_group": "ST",
+    "primary": ["off_the_ball", "anticipation", "strength", "pace", "acceleration"],
+    "secondary": ["composure", "balance"],
+    "x": 50,
+    "y": 82
+  },
+  "Splitting Outlet Centre Forward": {
+    "slot_group": "ST",
+    "primary": ["off_the_ball", "pace", "acceleration", "anticipation", "stamina"],
+    "secondary": ["dribbling", "decisions"],
+    "x": 40,
+    "y": 80
+  }
+}

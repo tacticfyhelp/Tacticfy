@@ -1,0 +1,402 @@
+{
+  "Goalkeeper": {
+    "slot_group": "GK",
+    "category": "goalkeeper",
+    "primary": ["reflexes", "handling", "one_on_ones", "positioning", "command_of_area", "kicking"],
+    "secondary": ["aerial_reach", "communication", "concentration", "decisions", "throwing", "passing"],
+    "x": 50,
+    "y": 6,
+    "half_space": "center",
+    "synergy_tags": []
+  },
+  "Ball-Playing Goalkeeper": {
+    "slot_group": "GK",
+    "category": "goalkeeper",
+    "primary": ["passing", "first_touch", "composure", "vision", "kicking", "reflexes"],
+    "secondary": ["handling", "one_on_ones", "decisions", "rushing_out", "technique", "positioning"],
+    "x": 50,
+    "y": 10,
+    "half_space": "center",
+    "synergy_tags": ["builder"]
+  },
+  "No-Nonsense Goalkeeper": {
+    "slot_group": "GK",
+    "category": "goalkeeper",
+    "primary": ["handling", "reflexes", "aerial_reach", "command_of_area", "positioning", "kicking"],
+    "secondary": ["concentration", "bravery", "communication", "one_on_ones", "jumping_reach"],
+    "x": 50,
+    "y": 4,
+    "half_space": "center",
+    "synergy_tags": []
+  },
+  "Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["marking", "tackling", "positioning", "heading", "strength", "jumping_reach"],
+    "secondary": ["anticipation", "concentration", "bravery", "decisions", "composure", "passing"],
+    "x": 50,
+    "y": 20,
+    "half_space": "center",
+    "synergy_tags": ["stopper"]
+  },
+  "Ball-Playing Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["passing", "composure", "vision", "positioning", "tackling", "marking"],
+    "secondary": ["technique", "first_touch", "decisions", "anticipation", "heading", "concentration"],
+    "x": 50,
+    "y": 22,
+    "half_space": "center",
+    "synergy_tags": ["builder", "line_breaker"]
+  },
+  "No-Nonsense Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["heading", "marking", "tackling", "strength", "positioning", "bravery"],
+    "secondary": ["jumping_reach", "concentration", "aggression", "anticipation", "decisions"],
+    "x": 50,
+    "y": 18,
+    "half_space": "center",
+    "synergy_tags": ["stopper"]
+  },
+  "Advanced Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["passing", "composure", "first_touch", "decisions", "vision", "technique"],
+    "secondary": ["tackling", "marking", "positioning", "anticipation", "stamina", "dribbling"],
+    "x": 50,
+    "y": 34,
+    "half_space": "center",
+    "synergy_tags": ["builder", "line_breaker"]
+  },
+  "Wide Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["marking", "tackling", "positioning", "pace", "passing", "heading"],
+    "secondary": ["crossing", "dribbling", "stamina", "anticipation", "strength", "concentration"],
+    "x": 36,
+    "y": 24,
+    "half_space": "half_space",
+    "synergy_tags": ["stopper"]
+  },
+  "Overlapping Centre-Back": {
+    "slot_group": "DC",
+    "category": "defender",
+    "primary": ["pace", "stamina", "crossing", "dribbling", "tackling", "off_the_ball"],
+    "secondary": ["marking", "passing", "work_rate", "positioning", "acceleration", "technique"],
+    "x": 26,
+    "y": 42,
+    "half_space": "wide",
+    "synergy_tags": ["runner"]
+  },
+  "Full-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["tackling", "marking", "positioning", "pace", "stamina", "crossing"],
+    "secondary": ["anticipation", "concentration", "passing", "teamwork", "work_rate", "acceleration"],
+    "x": 16,
+    "y": 40,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder"]
+  },
+  "Wing-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["crossing", "stamina", "pace", "work_rate", "tackling", "off_the_ball"],
+    "secondary": ["dribbling", "acceleration", "passing", "teamwork", "positioning", "marking"],
+    "x": 12,
+    "y": 54,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "runner"]
+  },
+  "Advanced Wing-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["crossing", "dribbling", "pace", "acceleration", "off_the_ball", "stamina"],
+    "secondary": ["technique", "first_touch", "work_rate", "flair", "passing", "agility"],
+    "x": 10,
+    "y": 66,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "runner"]
+  },
+  "Inside Full-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["tackling", "marking", "positioning", "strength", "heading", "composure"],
+    "secondary": ["passing", "concentration", "anticipation", "decisions", "jumping_reach"],
+    "x": 32,
+    "y": 20,
+    "half_space": "half_space",
+    "synergy_tags": ["stopper"]
+  },
+  "Inside Wing-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["passing", "decisions", "positioning", "composure", "tackling", "teamwork"],
+    "secondary": ["first_touch", "vision", "anticipation", "stamina", "work_rate", "technique"],
+    "x": 34,
+    "y": 44,
+    "half_space": "half_space",
+    "synergy_tags": ["holder"]
+  },
+  "Playmaking Wing-Back": {
+    "slot_group": "FB",
+    "category": "fullback",
+    "primary": ["passing", "vision", "first_touch", "technique", "decisions", "composure"],
+    "secondary": ["stamina", "work_rate", "dribbling", "tackling", "off_the_ball", "flair"],
+    "x": 36,
+    "y": 52,
+    "half_space": "half_space",
+    "synergy_tags": ["creator"]
+  },
+  "Defensive Midfielder": {
+    "slot_group": "DM",
+    "category": "midfield_holder",
+    "primary": ["positioning", "tackling", "anticipation", "decisions", "concentration", "teamwork"],
+    "secondary": ["marking", "passing", "composure", "strength", "work_rate", "first_touch"],
+    "x": 50,
+    "y": 36,
+    "half_space": "center",
+    "synergy_tags": ["holder", "screen"]
+  },
+  "Deep-Lying Playmaker": {
+    "slot_group": "DM",
+    "category": "midfield_creator",
+    "primary": ["passing", "vision", "composure", "decisions", "first_touch", "technique"],
+    "secondary": ["positioning", "anticipation", "teamwork", "balance", "concentration"],
+    "x": 50,
+    "y": 42,
+    "half_space": "center",
+    "synergy_tags": ["creator", "holder"]
+  },
+  "Half Back": {
+    "slot_group": "DM",
+    "category": "midfield_holder",
+    "primary": ["positioning", "tackling", "marking", "anticipation", "decisions", "composure"],
+    "secondary": ["passing", "concentration", "heading", "strength", "teamwork", "jumping_reach"],
+    "x": 50,
+    "y": 28,
+    "half_space": "center",
+    "synergy_tags": ["holder", "screen"]
+  },
+  "Central Midfielder": {
+    "slot_group": "CM",
+    "category": "midfield_runner",
+    "primary": ["passing", "decisions", "teamwork", "work_rate", "first_touch", "stamina"],
+    "secondary": ["tackling", "positioning", "vision", "off_the_ball", "technique", "anticipation"],
+    "x": 42,
+    "y": 52,
+    "half_space": "center",
+    "synergy_tags": ["runner"]
+  },
+  "Box-To-Box Midfielder": {
+    "slot_group": "CM",
+    "category": "midfield_runner",
+    "primary": ["stamina", "work_rate", "passing", "tackling", "off_the_ball", "decisions"],
+    "secondary": ["long_shots", "first_touch", "positioning", "teamwork", "acceleration", "natural_fitness"],
+    "x": 40,
+    "y": 60,
+    "half_space": "center",
+    "synergy_tags": ["runner", "box_crasher"]
+  },
+  "Box-To-Box Playmaker": {
+    "slot_group": "CM",
+    "category": "midfield_creator",
+    "primary": ["passing", "vision", "stamina", "technique", "first_touch", "decisions"],
+    "secondary": ["work_rate", "off_the_ball", "composure", "dribbling", "teamwork", "natural_fitness"],
+    "x": 44,
+    "y": 62,
+    "half_space": "center",
+    "synergy_tags": ["creator", "runner"]
+  },
+  "Channel Midfielder": {
+    "slot_group": "CM",
+    "category": "midfield_runner",
+    "primary": ["off_the_ball", "stamina", "work_rate", "passing", "dribbling", "acceleration"],
+    "secondary": ["first_touch", "technique", "crossing", "decisions", "pace", "finishing"],
+    "x": 28,
+    "y": 66,
+    "half_space": "half_space",
+    "synergy_tags": ["runner", "box_crasher"]
+  },
+  "Midfield Playmaker": {
+    "slot_group": "CM",
+    "category": "midfield_creator",
+    "primary": ["passing", "vision", "technique", "first_touch", "decisions", "composure"],
+    "secondary": ["flair", "off_the_ball", "teamwork", "anticipation", "balance"],
+    "x": 46,
+    "y": 58,
+    "half_space": "center",
+    "synergy_tags": ["creator", "line_breaker"]
+  },
+  "Wide Central Midfielder": {
+    "slot_group": "CM",
+    "category": "midfield_runner",
+    "primary": ["passing", "crossing", "stamina", "work_rate", "teamwork", "decisions"],
+    "secondary": ["dribbling", "first_touch", "technique", "off_the_ball", "positioning", "pace"],
+    "x": 24,
+    "y": 56,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "runner"]
+  },
+  "Wide Midfielder": {
+    "slot_group": "W",
+    "category": "midfield_runner",
+    "primary": ["crossing", "work_rate", "stamina", "passing", "teamwork", "decisions"],
+    "secondary": ["dribbling", "technique", "pace", "off_the_ball", "tackling", "positioning"],
+    "x": 11,
+    "y": 62,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "runner"]
+  },
+  "Winger": {
+    "slot_group": "W",
+    "category": "attacker",
+    "primary": ["crossing", "dribbling", "pace", "acceleration", "agility", "technique"],
+    "secondary": ["off_the_ball", "first_touch", "passing", "stamina", "work_rate", "flair"],
+    "x": 10,
+    "y": 78,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "creator"]
+  },
+  "Inside Winger": {
+    "slot_group": "W",
+    "category": "attacker",
+    "primary": ["dribbling", "passing", "technique", "vision", "first_touch", "acceleration"],
+    "secondary": ["crossing", "flair", "off_the_ball", "decisions", "long_shots", "agility"],
+    "x": 24,
+    "y": 76,
+    "half_space": "half_space",
+    "synergy_tags": ["creator"]
+  },
+  "Inside Forward": {
+    "slot_group": "W",
+    "category": "attacker",
+    "primary": ["dribbling", "finishing", "off_the_ball", "acceleration", "technique", "first_touch"],
+    "secondary": ["pace", "composure", "anticipation", "long_shots", "flair", "agility"],
+    "x": 26,
+    "y": 80,
+    "half_space": "half_space",
+    "synergy_tags": ["inside_threat", "goal_threat"]
+  },
+  "Playmaking Winger": {
+    "slot_group": "W",
+    "category": "midfield_creator",
+    "primary": ["passing", "vision", "technique", "dribbling", "first_touch", "decisions"],
+    "secondary": ["crossing", "flair", "composure", "off_the_ball", "agility"],
+    "x": 16,
+    "y": 74,
+    "half_space": "wide",
+    "synergy_tags": ["creator"]
+  },
+  "Wide Forward": {
+    "slot_group": "W",
+    "category": "attacker",
+    "primary": ["off_the_ball", "finishing", "pace", "acceleration", "dribbling", "crossing"],
+    "secondary": ["first_touch", "technique", "composure", "anticipation", "stamina"],
+    "x": 14,
+    "y": 84,
+    "half_space": "wide",
+    "synergy_tags": ["width_holder", "goal_threat"]
+  },
+  "Attacking Midfielder": {
+    "slot_group": "AM",
+    "category": "midfield_creator",
+    "primary": ["off_the_ball", "passing", "first_touch", "technique", "decisions", "vision"],
+    "secondary": ["long_shots", "dribbling", "anticipation", "composure", "flair"],
+    "x": 50,
+    "y": 74,
+    "half_space": "center",
+    "synergy_tags": ["creator"]
+  },
+  "Advanced Playmaker": {
+    "slot_group": "AM",
+    "category": "midfield_creator",
+    "primary": ["passing", "vision", "technique", "first_touch", "decisions", "composure"],
+    "secondary": ["flair", "off_the_ball", "dribbling", "anticipation", "agility"],
+    "x": 50,
+    "y": 74,
+    "half_space": "center",
+    "synergy_tags": ["creator", "line_breaker"]
+  },
+  "Free Role": {
+    "slot_group": "AM",
+    "category": "midfield_creator",
+    "primary": ["flair", "technique", "vision", "dribbling", "first_touch", "passing"],
+    "secondary": ["off_the_ball", "composure", "decisions", "anticipation", "agility"],
+    "x": 50,
+    "y": 76,
+    "half_space": "center",
+    "synergy_tags": ["creator"]
+  },
+  "Second Striker": {
+    "slot_group": "AM",
+    "category": "striker",
+    "primary": ["off_the_ball", "finishing", "anticipation", "composure", "first_touch", "acceleration"],
+    "secondary": ["dribbling", "technique", "long_shots", "decisions", "pace"],
+    "x": 50,
+    "y": 84,
+    "half_space": "center",
+    "synergy_tags": ["box_crasher", "goal_threat"]
+  },
+  "Centre Forward": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["finishing", "off_the_ball", "first_touch", "composure", "anticipation", "heading"],
+    "secondary": ["strength", "technique", "pace", "acceleration", "decisions"],
+    "x": 50,
+    "y": 88,
+    "half_space": "center",
+    "synergy_tags": ["goal_threat"]
+  },
+  "Channel Forward": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["off_the_ball", "pace", "acceleration", "stamina", "work_rate", "finishing"],
+    "secondary": ["dribbling", "first_touch", "anticipation", "crossing", "agility"],
+    "x": 50,
+    "y": 86,
+    "half_space": "center",
+    "synergy_tags": ["goal_threat", "runner"]
+  },
+  "Deep-Lying Forward": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["first_touch", "passing", "technique", "decisions", "composure", "off_the_ball"],
+    "secondary": ["vision", "strength", "finishing", "teamwork", "balance"],
+    "x": 50,
+    "y": 82,
+    "half_space": "center",
+    "synergy_tags": ["creator"]
+  },
+  "False Nine": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["first_touch", "passing", "technique", "vision", "dribbling", "decisions"],
+    "secondary": ["off_the_ball", "composure", "flair", "agility", "finishing"],
+    "x": 50,
+    "y": 78,
+    "half_space": "center",
+    "synergy_tags": ["creator", "line_breaker"]
+  },
+  "Poacher": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["finishing", "off_the_ball", "anticipation", "composure", "acceleration", "first_touch"],
+    "secondary": ["pace", "decisions", "heading", "balance"],
+    "x": 50,
+    "y": 92,
+    "half_space": "center",
+    "synergy_tags": ["goal_threat"]
+  },
+  "Target Forward": {
+    "slot_group": "ST",
+    "category": "striker",
+    "primary": ["heading", "jumping_reach", "strength", "bravery", "finishing", "first_touch"],
+    "secondary": ["balance", "composure", "off_the_ball", "teamwork", "aggression"],
+    "x": 50,
+    "y": 88,
+    "half_space": "center",
+    "synergy_tags": ["aerial", "goal_threat"]
+  }
+}

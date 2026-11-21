@@ -1,0 +1,194 @@
+{
+  "4-2-3-1 DM": {
+    "name": "4-2-3-1 DM",
+    "category": "standard",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.05,
+      "Proactive Possession": 1.06,
+      "Balanced Tactical Meta": 1.07,
+      "Fluid Counter-Attack": 1.00,
+      "Defensive Solidity": 0.96
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "DML", "position": "DM", "side": "L", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [37, 42], "oop_xy": [37, 34]},
+      {"slot_id": "DMR", "position": "DM", "side": "R", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [63, 42], "oop_xy": [63, 34]},
+      {"slot_id": "AML", "position": "AML", "side": "L", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [13, 75], "oop_xy": [13, 62]},
+      {"slot_id": "AMC", "position": "AMC", "side": "C", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [50, 73], "oop_xy": [50, 62]},
+      {"slot_id": "AMR", "position": "AMR", "side": "R", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [87, 75], "oop_xy": [87, 62]},
+      {"slot_id": "ST", "position": "ST", "side": "C", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [50, 90], "oop_xy": [50, 78]}
+    ]
+  },
+  "4-3-3 DM Wide": {
+    "name": "4-3-3 DM Wide",
+    "category": "standard",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.04,
+      "Proactive Possession": 1.07,
+      "Balanced Tactical Meta": 1.05,
+      "Fluid Counter-Attack": 1.02,
+      "Defensive Solidity": 1.00
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "DM", "position": "DM", "side": "C", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker", "Half Back"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Dropping Defensive Midfielder", "Pressing Defensive Midfielder"], "ip_xy": [50, 42], "oop_xy": [50, 34]},
+      {"slot_id": "MCL", "position": "MC", "side": "L", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker", "Wide Central Midfielder"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [31, 57], "oop_xy": [31, 48]},
+      {"slot_id": "MCR", "position": "MC", "side": "R", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker", "Wide Central Midfielder"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [69, 57], "oop_xy": [69, 48]},
+      {"slot_id": "AML", "position": "AML", "side": "L", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [13, 75], "oop_xy": [13, 62]},
+      {"slot_id": "AMR", "position": "AMR", "side": "R", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [87, 75], "oop_xy": [87, 62]},
+      {"slot_id": "ST", "position": "ST", "side": "C", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [50, 90], "oop_xy": [50, 78]}
+    ]
+  },
+  "4-4-2": {
+    "name": "4-4-2",
+    "category": "standard",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.02,
+      "Proactive Possession": 0.98,
+      "Balanced Tactical Meta": 1.03,
+      "Fluid Counter-Attack": 1.05,
+      "Defensive Solidity": 1.05
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "ML", "position": "ML", "side": "L", "ip_roles": ["Wide Midfielder", "Winger", "Inside Winger", "Playmaking Winger"], "oop_roles": ["Wide Midfielder", "Tracking Wide Midfielder", "Wide Outlet Wide Midfielder"], "ip_xy": [11, 60], "oop_xy": [11, 48]},
+      {"slot_id": "MCL", "position": "MC", "side": "L", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [37, 57], "oop_xy": [37, 48]},
+      {"slot_id": "MCR", "position": "MC", "side": "R", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [63, 57], "oop_xy": [63, 48]},
+      {"slot_id": "MR", "position": "MR", "side": "R", "ip_roles": ["Wide Midfielder", "Winger", "Inside Winger", "Playmaking Winger"], "oop_roles": ["Wide Midfielder", "Tracking Wide Midfielder", "Wide Outlet Wide Midfielder"], "ip_xy": [89, 60], "oop_xy": [89, 48]},
+      {"slot_id": "STL", "position": "ST", "side": "L", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [36, 90], "oop_xy": [36, 78]},
+      {"slot_id": "STR", "position": "ST", "side": "R", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [64, 90], "oop_xy": [64, 78]}
+    ]
+  },
+  "4-1-4-1 DM": {
+    "name": "4-1-4-1 DM",
+    "category": "standard",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.00,
+      "Proactive Possession": 1.05,
+      "Balanced Tactical Meta": 1.04,
+      "Fluid Counter-Attack": 1.01,
+      "Defensive Solidity": 1.06
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "DM", "position": "DM", "side": "C", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker", "Half Back"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Dropping Defensive Midfielder", "Pressing Defensive Midfielder"], "ip_xy": [50, 42], "oop_xy": [50, 34]},
+      {"slot_id": "ML", "position": "ML", "side": "L", "ip_roles": ["Wide Midfielder", "Winger", "Inside Winger", "Playmaking Winger"], "oop_roles": ["Wide Midfielder", "Tracking Wide Midfielder", "Wide Outlet Wide Midfielder"], "ip_xy": [11, 60], "oop_xy": [11, 48]},
+      {"slot_id": "MCL", "position": "MC", "side": "L", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [37, 57], "oop_xy": [37, 48]},
+      {"slot_id": "MCR", "position": "MC", "side": "R", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [63, 57], "oop_xy": [63, 48]},
+      {"slot_id": "MR", "position": "MR", "side": "R", "ip_roles": ["Wide Midfielder", "Winger", "Inside Winger", "Playmaking Winger"], "oop_roles": ["Wide Midfielder", "Tracking Wide Midfielder", "Wide Outlet Wide Midfielder"], "ip_xy": [89, 60], "oop_xy": [89, 48]},
+      {"slot_id": "ST", "position": "ST", "side": "C", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [50, 90], "oop_xy": [50, 78]}
+    ]
+  },
+  "4-2-2-2": {
+    "name": "4-2-2-2",
+    "category": "tactical_meta",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.06,
+      "Proactive Possession": 1.00,
+      "Balanced Tactical Meta": 1.02,
+      "Fluid Counter-Attack": 1.05,
+      "Defensive Solidity": 0.98
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "DML", "position": "DM", "side": "L", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [37, 42], "oop_xy": [37, 34]},
+      {"slot_id": "DMR", "position": "DM", "side": "R", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [63, 42], "oop_xy": [63, 34]},
+      {"slot_id": "AMCL", "position": "AMC", "side": "L", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [23, 73], "oop_xy": [18, 62]},
+      {"slot_id": "AMCR", "position": "AMC", "side": "R", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [77, 73], "oop_xy": [82, 62]},
+      {"slot_id": "STL", "position": "ST", "side": "L", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [36, 90], "oop_xy": [36, 78]},
+      {"slot_id": "STR", "position": "ST", "side": "R", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [64, 90], "oop_xy": [64, 78]}
+    ]
+  },
+  "4-4-2 Diamond": {
+    "name": "4-4-2 Diamond",
+    "category": "tactical_meta",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.03,
+      "Proactive Possession": 1.03,
+      "Balanced Tactical Meta": 1.02,
+      "Fluid Counter-Attack": 1.04,
+      "Defensive Solidity": 0.99
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DL", "position": "DL", "side": "L", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [11, 34], "oop_xy": [11, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [37, 26], "oop_xy": [37, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back", "Advanced Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [63, 26], "oop_xy": [63, 20]},
+      {"slot_id": "DR", "position": "DR", "side": "R", "ip_roles": ["Full-Back", "Wing-Back", "Inside Full-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Full-Back", "Pressing Full-Back", "Holding Full-Back"], "ip_xy": [89, 34], "oop_xy": [89, 20]},
+      {"slot_id": "DM", "position": "DM", "side": "C", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker", "Half Back"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Dropping Defensive Midfielder", "Pressing Defensive Midfielder"], "ip_xy": [50, 42], "oop_xy": [50, 34]},
+      {"slot_id": "MCL", "position": "MC", "side": "L", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker", "Wide Central Midfielder"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [27, 57], "oop_xy": [30, 48]},
+      {"slot_id": "MCR", "position": "MC", "side": "R", "ip_roles": ["Central Midfielder", "Box-To-Box Midfielder", "Box-To-Box Playmaker", "Channel Midfielder", "Midfield Playmaker", "Wide Central Midfielder"], "oop_roles": ["Central Midfielder", "Pressing Central Midfielder", "Screening Central Midfielder", "Wide Covering Central Midfielder"], "ip_xy": [73, 57], "oop_xy": [70, 48]},
+      {"slot_id": "AMC", "position": "AMC", "side": "C", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [50, 73], "oop_xy": [50, 62]},
+      {"slot_id": "STL", "position": "ST", "side": "L", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [36, 90], "oop_xy": [36, 78]},
+      {"slot_id": "STR", "position": "ST", "side": "R", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [64, 90], "oop_xy": [64, 78]}
+    ]
+  },
+  "3-4-2-1": {
+    "name": "3-4-2-1",
+    "category": "tactical_meta",
+    "style_affinity": {
+      "High-Scoring Attacking": 1.04,
+      "Proactive Possession": 1.05,
+      "Balanced Tactical Meta": 1.02,
+      "Fluid Counter-Attack": 1.03,
+      "Defensive Solidity": 1.01
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Wide Centre-Back", "Overlapping Centre-Back", "Ball-Playing Centre-Back", "Centre-Back"], "oop_roles": ["Wide Centre-Back", "Stopping Wide Centre-Back", "Covering Wide Centre-Back"], "ip_xy": [27, 26], "oop_xy": [30, 20]},
+      {"slot_id": "DCC", "position": "DC", "side": "C", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [50, 26], "oop_xy": [50, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Wide Centre-Back", "Overlapping Centre-Back", "Ball-Playing Centre-Back", "Centre-Back"], "oop_roles": ["Wide Centre-Back", "Stopping Wide Centre-Back", "Covering Wide Centre-Back"], "ip_xy": [73, 26], "oop_xy": [70, 20]},
+      {"slot_id": "WBL", "position": "WBL", "side": "L", "ip_roles": ["Wing-Back", "Advanced Wing-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Wing-Back", "Pressing Wing-Back", "Holding Wing-Back"], "ip_xy": [9, 46], "oop_xy": [9, 20]},
+      {"slot_id": "DML", "position": "DM", "side": "L", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [37, 42], "oop_xy": [37, 34]},
+      {"slot_id": "DMR", "position": "DM", "side": "R", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [63, 42], "oop_xy": [63, 34]},
+      {"slot_id": "WBR", "position": "WBR", "side": "R", "ip_roles": ["Wing-Back", "Advanced Wing-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Wing-Back", "Pressing Wing-Back", "Holding Wing-Back"], "ip_xy": [91, 46], "oop_xy": [91, 20]},
+      {"slot_id": "AMCL", "position": "AMC", "side": "L", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [33, 73], "oop_xy": [30, 62]},
+      {"slot_id": "AMCR", "position": "AMC", "side": "R", "ip_roles": ["Attacking Midfielder", "Advanced Playmaker", "Free Role", "Second Striker"], "oop_roles": ["Attacking Midfielder", "Tracking Attacking Midfielder", "Central Outlet Attacking Midfielder", "Splitting Outlet Attacking Midfielder"], "ip_xy": [67, 73], "oop_xy": [70, 62]},
+      {"slot_id": "ST", "position": "ST", "side": "C", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [50, 90], "oop_xy": [50, 78]}
+    ]
+  },
+  "5-2-2-1": {
+    "name": "5-2-2-1",
+    "category": "tactical_meta",
+    "style_affinity": {
+      "High-Scoring Attacking": 0.96,
+      "Proactive Possession": 0.99,
+      "Balanced Tactical Meta": 1.01,
+      "Fluid Counter-Attack": 1.06,
+      "Defensive Solidity": 1.08
+    },
+    "slots": [
+      {"slot_id": "GK", "position": "GK", "side": "C", "ip_roles": ["Goalkeeper", "Ball-Playing Goalkeeper", "No-Nonsense Goalkeeper"], "oop_roles": ["Goalkeeper", "Sweeper Keeper", "Line-Holding Goalkeeper"], "ip_xy": [50, 4], "oop_xy": [50, 4]},
+      {"slot_id": "WBL", "position": "WBL", "side": "L", "ip_roles": ["Wing-Back", "Advanced Wing-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Wing-Back", "Pressing Wing-Back", "Holding Wing-Back"], "ip_xy": [9, 46], "oop_xy": [9, 20]},
+      {"slot_id": "DCL", "position": "DC", "side": "L", "ip_roles": ["Wide Centre-Back", "Overlapping Centre-Back", "Ball-Playing Centre-Back", "Centre-Back"], "oop_roles": ["Wide Centre-Back", "Stopping Wide Centre-Back", "Covering Wide Centre-Back"], "ip_xy": [30, 26], "oop_xy": [30, 20]},
+      {"slot_id": "DCC", "position": "DC", "side": "C", "ip_roles": ["Centre-Back", "Ball-Playing Centre-Back", "No-Nonsense Centre-Back"], "oop_roles": ["Centre-Back", "Stopping Centre-Back", "Covering Centre-Back"], "ip_xy": [50, 26], "oop_xy": [50, 20]},
+      {"slot_id": "DCR", "position": "DC", "side": "R", "ip_roles": ["Wide Centre-Back", "Overlapping Centre-Back", "Ball-Playing Centre-Back", "Centre-Back"], "oop_roles": ["Wide Centre-Back", "Stopping Wide Centre-Back", "Covering Wide Centre-Back"], "ip_xy": [70, 26], "oop_xy": [70, 20]},
+      {"slot_id": "WBR", "position": "WBR", "side": "R", "ip_roles": ["Wing-Back", "Advanced Wing-Back", "Inside Wing-Back", "Playmaking Wing-Back"], "oop_roles": ["Wing-Back", "Pressing Wing-Back", "Holding Wing-Back"], "ip_xy": [91, 46], "oop_xy": [91, 20]},
+      {"slot_id": "DML", "position": "DM", "side": "L", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [37, 42], "oop_xy": [37, 34]},
+      {"slot_id": "DMR", "position": "DM", "side": "R", "ip_roles": ["Defensive Midfielder", "Deep-Lying Playmaker"], "oop_roles": ["Defensive Midfielder", "Screening Defensive Midfielder", "Pressing Defensive Midfielder", "Wide Covering Defensive Midfielder"], "ip_xy": [63, 42], "oop_xy": [63, 34]},
+      {"slot_id": "AML", "position": "AML", "side": "L", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [17, 75], "oop_xy": [15, 62]},
+      {"slot_id": "AMR", "position": "AMR", "side": "R", "ip_roles": ["Winger", "Inside Forward", "Inside Winger", "Playmaking Winger", "Wide Forward"], "oop_roles": ["Winger", "Tracking Winger", "Inside Outlet Winger", "Wide Outlet Winger"], "ip_xy": [83, 75], "oop_xy": [85, 62]},
+      {"slot_id": "ST", "position": "ST", "side": "C", "ip_roles": ["Centre Forward", "Channel Forward", "Deep-Lying Forward", "False Nine", "Poacher", "Target Forward"], "oop_roles": ["Centre Forward", "Tracking Centre Forward", "Central Outlet Centre Forward", "Splitting Outlet Centre Forward"], "ip_xy": [50, 90], "oop_xy": [50, 78]}
+    ]
+  }
+}
