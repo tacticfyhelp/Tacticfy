@@ -5,7 +5,7 @@
 <h1 align="center">Tacticfy</h1>
 
 <p align="center">
-  A Windows companion app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it.<br>
+  A native Windows desktop app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it.<br>
   <a href="https://tacticfyhelp.github.io/Tacticfy/">tacticfyhelp.github.io/Tacticfy</a>
 </p>
 
@@ -23,7 +23,9 @@ Tacticfy reads your squad straight from a running FM27 save (or from an imported
 - **Individual training** – role focus, additional focus and training intensity for every player, based on attribute gaps, age, potential and personality.
 - **Squad transfer advisor** – Core / Rotation / Loan / Sell High / Sell, plus the weakest link in your starting XI.
 
-Languages: English and Hebrew (right-to-left), with light and dark themes.
+Tacticfy is a native Windows desktop application (PySide6 / Qt) with Apple-style Light and Dark themes. It runs entirely on your PC – no browser and no account, and nothing is sent online unless you choose to report a bug.
+
+Languages: English and Hebrew (right-to-left) – switch any time with the **Lang: EN / עב** button next to **Theme**.
 
 ## Easy installation (no Python required)
 
