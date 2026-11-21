@@ -54,3 +54,6 @@ desktop.ini
 .vscode/
 .claude/
 *.local.*
+
+# --- Website (docs/) build tooling --------------------------------------
+docs/node_modules/

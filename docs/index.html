@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tacticfy – FM27 tactics built around your squad</title>
+  <meta name="description" content="Tacticfy reads your Football Manager 27 squad and builds the best formation, dual-phase roles, instructions, matchday bench and training plan. Free Windows app.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Tacticfy – FM27 tactics built around your squad">
+  <meta property="og:description" content="Best formation, In/Out of Possession roles, instructions, bench and training for your FM27 save.">
+  <meta property="og:image" content="assets/screens/en_tactics.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="assets/tacticfy-64.png">
+  <link rel="apple-touch-icon" href="assets/tacticfy-256.png">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#" class="flex items-center gap-2.5 font-semibold text-slate-900 dark:text-white">
+        <img src="assets/tacticfy-64.png" alt="" class="size-8" width="32" height="32">
+        <span class="text-lg tracking-tight">Tacticfy</span>
+      </a>
+      <div class="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex dark:text-slate-400">
+        <a href="#features" class="hover:text-slate-900 dark:hover:text-white">Features</a>
+        <a href="#screens" class="hover:text-slate-900 dark:hover:text-white">Screenshots</a>
+        <a href="#how" class="hover:text-slate-900 dark:hover:text-white">How it works</a>
+        <a href="#patches" class="hover:text-slate-900 dark:hover:text-white">FM27 patches</a>
+        <a href="#faq" class="hover:text-slate-900 dark:hover:text-white">FAQ</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/tacticfyhelp/Tacticfy" class="hidden rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 sm:inline-flex dark:text-slate-400 dark:hover:bg-slate-800" aria-label="Tacticfy on GitHub">
+          <svg class="mr-1.5 size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+        <a href="https://github.com/tacticfyhelp/Tacticfy/releases/latest/download/TacticfySetup.exe" class="inline-flex items-center rounded-lg bg-pitch-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pitch-700">
+          Download
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="pitch-lines relative overflow-hidden bg-pitch-900 text-white">
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-pitch-950/40 via-transparent to-pitch-950/70"></div>
+      <div class="relative mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6 sm:pt-24">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium tracking-wide text-pitch-100 uppercase">
+            <span class="size-1.5 rounded-full bg-emerald-300"></span>
+            Free Windows app for Football Manager 27
+          </p>
+          <h1 class="text-4xl font-bold tracking-tight text-balance sm:text-6xl">
+            Tactics built around <span class="text-emerald-300">your squad</span>.
+          </h1>
+          <p class="mx-auto mt-6 max-w-2xl text-lg text-pretty text-pitch-100/90">
+            Tacticfy reads your FM27 save and works out the best formation, In&nbsp;and Out&nbsp;of&nbsp;Possession roles,
+            instructions, matchday bench and training plan – using the exact names you see in the game.
+          </p>
+          <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href="https://github.com/tacticfyhelp/Tacticfy/releases/latest/download/TacticfySetup.exe"
+               class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-base font-semibold text-pitch-800 shadow-lg shadow-pitch-950/30 hover:bg-pitch-50 sm:w-auto">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              Download TacticfySetup.exe
+            </a>
+            <a href="https://github.com/tacticfyhelp/Tacticfy/releases"
+               class="inline-flex w-full items-center justify-center rounded-xl border border-white/25 px-6 py-3.5 text-base font-semibold text-white hover:bg-white/10 sm:w-auto">
+              All releases
+            </a>
+          </div>
+          <p class="mt-4 text-sm text-pitch-100/70">Windows 10 / 11 · 64-bit · No Python required · English &amp; Hebrew</p>
+        </div>
+
+        <figure class="mx-auto mt-14 max-w-5xl">
+          <div class="overflow-hidden rounded-xl bg-slate-100 shadow-2xl ring-1 shadow-pitch-950/50 ring-white/15">
+            <div class="flex items-center gap-1.5 border-b border-slate-200 bg-slate-50 px-4 py-2.5">
+              <span class="size-2.5 rounded-full bg-slate-300"></span>
+              <span class="size-2.5 rounded-full bg-slate-300"></span>
+              <span class="size-2.5 rounded-full bg-slate-300"></span>
+              <span class="ml-3 truncate text-xs text-slate-500">Tacticfy 1.0.0 – Tactical Pitch &amp; Instructions</span>
+            </div>
+            <img src="assets/screens/en_tactics.png" width="1240" height="720" class="block h-auto w-full"
+                 alt="Tacticfy tactical pitch: a 4-2-3-1 DM with In Possession and Out of Possession roles on two pitches, and the match plan with team instructions.">
+          </div>
+          <figcaption class="mt-4 text-center text-sm text-pitch-100/70">Shown with Tacticfy's built-in demo squad.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="scroll-mt-20 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">Everything you set up before a match</h2>
+          <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">One click reads your squad. Tacticfy does the spreadsheet work so you can copy the plan straight into FM27.</p>
+        </div>
+
+        <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Best formation</h3>
+            <p class="mt-2 text-sm leading-6">Scores every supported formation against your players and picks the one they fit best – or lock your own and let Tacticfy fill it.</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10l-3-3M17 17H7l3 3"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Dual-phase roles</h3>
+            <p class="mt-2 text-sm leading-6">An In Possession and an Out of Possession role for every slot, using the official FM27 role names so they match the game 1:1.</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Team &amp; player instructions</h3>
+            <p class="mt-2 text-sm leading-6">Instruction tiles for your chosen style – from High-Scoring Attacking to Defensive Solidity – with the exact FM27 tile names. Copy the whole plan in one click.</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Matchday bench &amp; subs</h3>
+            <p class="mt-2 text-sm leading-6">A 7 or 9-man bench with a backup keeper and cover for every line, plus planned changes: chase a goal, protect a lead, fresh legs.</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Individual training</h3>
+            <p class="mt-2 text-sm leading-6">Role focus, additional focus and training intensity for each player, based on attribute gaps, age, potential, professionalism and injury risk.</p>
+          </article>
+
+          <article class="rounded-2xl border border-slate-200 p-6 dark:border-slate-800">
+            <div class="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-pitch-100 text-pitch-700 dark:bg-pitch-900 dark:text-emerald-300">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-white">Squad &amp; transfer advisor</h3>
+            <p class="mt-2 text-sm leading-6">Core, rotation, loan, sell-high and sell lists, plus the weakest link in your XI and a ready-made search filter for their replacement.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section id="screens" class="scroll-mt-20 bg-slate-50 py-20 sm:py-28 dark:bg-slate-900/50">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">See it in action</h2>
+          <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">Light and dark themes, in English or Hebrew (right-to-left). Click a screenshot for full size.</p>
+        </div>
+        <div class="mt-14 grid gap-8 md:grid-cols-2">
+          <figure>
+            <a href="assets/screens/en_bench.png" class="block overflow-hidden rounded-xl shadow-lg ring-1 ring-slate-900/10 transition hover:shadow-xl dark:ring-white/10">
+              <img src="assets/screens/en_bench.png" width="1240" height="720" loading="lazy" class="h-auto w-full" alt="Recommended matchday bench with backup keeper, line cover and suggested substitutions.">
+            </a>
+            <figcaption class="mt-3 text-sm"><span class="font-semibold text-slate-900 dark:text-white">Bench &amp; Subs</span> – who covers which slot, and when to make each change.</figcaption>
+          </figure>
+          <figure>
+            <a href="assets/screens/en_advisor.png" class="block overflow-hidden rounded-xl shadow-lg ring-1 ring-slate-900/10 transition hover:shadow-xl dark:ring-white/10">
+              <img src="assets/screens/en_advisor.png" width="1240" height="720" loading="lazy" class="h-auto w-full" alt="Squad planner showing the weakest link, a transfer search filter, and keep and loan lists.">
+            </a>
+            <figcaption class="mt-3 text-sm"><span class="font-semibold text-slate-900 dark:text-white">Squad Planner</span> – weakest link, transfer filter, keep / loan / sell.</figcaption>
+          </figure>
+          <figure>
+            <a href="assets/screens/en_squad.png" class="block overflow-hidden rounded-xl shadow-lg ring-1 ring-slate-900/10 transition hover:shadow-xl dark:ring-white/10">
+              <img src="assets/screens/en_squad.png" width="1240" height="720" loading="lazy" class="h-auto w-full" alt="Squad table with hidden attributes, role scores and per-player training recommendations.">
+            </a>
+            <figcaption class="mt-3 text-sm"><span class="font-semibold text-slate-900 dark:text-white">Squad</span> – hidden attributes, role scores and individual training.</figcaption>
+          </figure>
+          <figure>
+            <a href="assets/screens/he_tactics.png" class="block overflow-hidden rounded-xl shadow-lg ring-1 ring-slate-900/10 transition hover:shadow-xl dark:ring-white/10">
+              <img src="assets/screens/he_tactics.png" width="1240" height="720" loading="lazy" class="h-auto w-full" alt="The tactical pitch with the interface in Hebrew, laid out right-to-left.">
+            </a>
+            <figcaption class="mt-3 text-sm"><span class="font-semibold text-slate-900 dark:text-white">עברית</span> – full Hebrew interface; FM27 role and instruction names stay in English.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="scroll-mt-20 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <h2 class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">Up and running in a minute</h2>
+        <ol class="mt-14 grid gap-6 md:grid-cols-3">
+          <li class="relative rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+            <span class="flex size-9 items-center justify-center rounded-full bg-pitch-600 text-sm font-bold text-white">1</span>
+            <h3 class="mt-4 font-semibold text-slate-900 dark:text-white">Install</h3>
+            <p class="mt-2 text-sm leading-6">Download <code class="rounded bg-slate-200/70 px-1 py-0.5 text-[0.8125rem] dark:bg-slate-800">TacticfySetup.exe</code> and install it like any Windows app.</p>
+          </li>
+          <li class="relative rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+            <span class="flex size-9 items-center justify-center rounded-full bg-pitch-600 text-sm font-bold text-white">2</span>
+            <h3 class="mt-4 font-semibold text-slate-900 dark:text-white">Open your save</h3>
+            <p class="mt-2 text-sm leading-6">Start FM27, load your career and open the <strong class="font-semibold text-slate-900 dark:text-white">Squad</strong> screen.</p>
+          </li>
+          <li class="relative rounded-2xl bg-slate-50 p-6 dark:bg-slate-900">
+            <span class="flex size-9 items-center justify-center rounded-full bg-pitch-600 text-sm font-bold text-white">3</span>
+            <h3 class="mt-4 font-semibold text-slate-900 dark:text-white">Load from FM27</h3>
+            <p class="mt-2 text-sm leading-6">Click <strong class="font-semibold text-slate-900 dark:text-white">Load from FM27</strong>, pick a style, and copy the plan into the game.</p>
+          </li>
+        </ol>
+        <p class="mt-8 text-center text-sm text-slate-500">
+          Windows SmartScreen may warn because the installer isn't code-signed – click <em>More info → Run anyway</em>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Patch policy -->
+    <section id="patches" class="scroll-mt-20 pb-20 sm:pb-28">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6">
+        <div class="rounded-2xl border border-amber-200 bg-amber-50 p-6 sm:p-8 dark:border-amber-500/30 dark:bg-amber-500/10">
+          <h2 class="text-xl font-bold text-amber-900 dark:text-amber-200">FM27 patch policy</h2>
+          <p class="mt-3 leading-7 text-amber-900/90 dark:text-amber-100/90">
+            Live reading depends on memory offsets for the current FM27 patch. When Sports Interactive ships an update,
+            <strong>Load from FM27</strong> can stop working until Tacticfy is updated.
+            Whenever a new FM27 patch breaks live reading, an updated release is published on
+            <a href="https://github.com/tacticfyhelp/Tacticfy/releases" class="font-semibold underline underline-offset-2">GitHub Releases</a> –
+            just install it over the old version. Until then you can still use <strong>Import</strong> with an FM squad export.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="scroll-mt-20 bg-slate-50 py-20 sm:py-28 dark:bg-slate-900/50">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+        <h2 class="text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">Questions</h2>
+        <div class="mt-12 divide-y divide-slate-200 dark:divide-slate-800">
+          <details class="group py-5" open>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900 dark:text-white">
+              Is it free?
+              <span class="text-slate-400 transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-sm leading-6">Yes. Tacticfy is free and its source code is on GitHub.</p>
+          </details>
+          <details class="group py-5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900 dark:text-white">
+              Does it change my save or the game?
+              <span class="text-slate-400 transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-sm leading-6">No. Tacticfy only reads the squad from FM27's memory while the game is running. It never writes to the game or your save files.</p>
+          </details>
+          <details class="group py-5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900 dark:text-white">
+              “Load from FM27” stopped working after a game update.
+              <span class="text-slate-400 transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-sm leading-6">A new FM27 patch moved the data Tacticfy reads. Check <a href="https://github.com/tacticfyhelp/Tacticfy/releases" class="font-medium text-pitch-600 underline underline-offset-2 dark:text-emerald-300">Releases</a> for an update, and report it with the <strong>Report Bug</strong> button if there isn't one yet.</p>
+          </details>
+          <details class="group py-5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900 dark:text-white">
+              What does the Report Bug button send?
+              <span class="text-slate-400 transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-sm leading-6">It opens a GitHub issue in your browser, pre-filled with your Windows version, the Tacticfy version and the last 20 log lines. The log never contains player names or save data, and your Windows user name is removed. Nothing is sent until you submit the issue yourself.</p>
+          </details>
+          <details class="group py-5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900 dark:text-white">
+              Which languages are supported?
+              <span class="text-slate-400 transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-sm leading-6">English and Hebrew. Switch with the <strong>Lang: EN / עב</strong> button. FM27 role and instruction names always stay in English so they match the game.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="pitch-lines bg-pitch-900 py-16 text-center text-white">
+      <div class="mx-auto max-w-2xl px-4 sm:px-6">
+        <h2 class="text-3xl font-bold tracking-tight">Ready for matchday?</h2>
+        <a href="https://github.com/tacticfyhelp/Tacticfy/releases/latest/download/TacticfySetup.exe"
+           class="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 font-semibold text-pitch-800 hover:bg-pitch-50">
+          Download for Windows
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 py-10 dark:border-slate-800">
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 text-sm text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between">
+      <div class="flex items-center gap-2">
+        <img src="assets/tacticfy-64.png" alt="" class="size-6" width="24" height="24">
+        <span class="font-semibold text-slate-700 dark:text-slate-300">Tacticfy</span>
+      </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="https://github.com/tacticfyhelp/Tacticfy" class="hover:text-slate-900 dark:hover:text-white">Source code</a>
+        <a href="https://github.com/tacticfyhelp/Tacticfy/releases" class="hover:text-slate-900 dark:hover:text-white">Releases</a>
+        <a href="https://github.com/tacticfyhelp/Tacticfy/issues/new?template=bug_report.md" class="hover:text-slate-900 dark:hover:text-white">Report a bug</a>
+      </div>
+      <p class="max-w-md text-xs leading-5 md:text-right">
+        Unofficial fan-made tool, not affiliated with or endorsed by Sports Interactive or SEGA.
+        Football Manager is a trademark of its owners.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

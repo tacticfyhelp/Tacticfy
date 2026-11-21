@@ -1,0 +1,37 @@
+/* Tailwind v4 source for the Tacticfy website. Compile with docs/build_css.bat -> docs/assets/site.css */
+@import "tailwindcss";
+
+@source "../index.html";
+
+@theme {
+  --font-sans: "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --color-pitch-50: #effaf3;
+  --color-pitch-100: #d8f3e1;
+  --color-pitch-500: #2f9e5b;
+  --color-pitch-600: #23824a;
+  --color-pitch-700: #1d6a3d;
+  --color-pitch-800: #1a5533;
+  --color-pitch-900: #16462b;
+  --color-pitch-950: #0a2717;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-slate-700 antialiased dark:bg-slate-950 dark:text-slate-300;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-sky-500;
+  }
+}
+
+@layer components {
+  .pitch-lines {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}

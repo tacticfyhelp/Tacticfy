@@ -5,7 +5,8 @@
 <h1 align="center">Tacticfy</h1>
 
 <p align="center">
-  A Windows companion app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it.
+  A Windows companion app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it.<br>
+  <a href="https://tacticfyhelp.github.io/Tacticfy/">tacticfyhelp.github.io/Tacticfy</a>
 </p>
 
 ---
