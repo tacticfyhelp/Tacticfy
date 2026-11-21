@@ -5,7 +5,7 @@
 <h1 align="center">Tacticfy</h1>
 
 <p align="center">
-  A Windows companion app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it.<br>
+  A web app for <b>Football Manager 27</b> that reads your squad and builds the tactic around it – running on your own PC, in your browser.<br>
   <a href="https://tacticfyhelp.github.io/Tacticfy/">tacticfyhelp.github.io/Tacticfy</a>
 </p>
 
@@ -25,12 +25,19 @@ Tacticfy reads your squad straight from a running FM27 save (or from an imported
 
 Languages: English and Hebrew (right-to-left), with light and dark themes.
 
+### How it runs
+
+Tacticfy is a **local web app**. Starting it launches a small server on your PC and opens the UI in your default browser at `http://127.0.0.1:8527`.
+The server is what reads FM27's memory – a web page on its own can't do that – and it only listens on your own machine, so nothing is sent to the internet.
+Closing the tab (or clicking the ⏻ button) stops it; starting Tacticfy again while it's running just reopens the page.
+
 ## Easy installation (no Python required)
 
 1. Go to the **[Releases](https://github.com/tacticfyhelp/Tacticfy/releases)** page.
 2. Download **`TacticfySetup.exe`** from the latest release.
 3. Run it and install like any standard Windows app. It adds Start Menu and (optionally) Desktop shortcuts and a normal uninstaller.
-4. Start FM27, load your save, open the **Squad** screen, then click **Load from FM27** in Tacticfy.
+4. Start FM27, load your save and open the **Squad** screen.
+5. Start Tacticfy – it opens in your browser – and click **Load from FM27**.
 
 > Windows SmartScreen may warn about an unrecognised app because the installer is not code-signed. Click **More info → Run anyway**.
 
@@ -47,7 +54,7 @@ FM27 updates can move those offsets, and then **Load from FM27** fails (for exam
 
 ## Reporting bugs
 
-Click **Report Bug** in the top-right of the toolbar. It opens a GitHub issue pre-filled with your Windows version, the Tacticfy version and the last 20 log lines. Tacticfy never logs player names, attributes or save data, and your Windows user name and home folder are removed from the log lines.
+Click **Report Bug** in the toolbar. It opens a GitHub issue pre-filled with your Windows version, the Tacticfy version and the last 20 log lines. Tacticfy never logs player names, attributes or save data, and your Windows user name and home folder are removed from the log lines.
 
 ## Developer setup
 
@@ -61,7 +68,9 @@ python -m venv .venv
 run.bat
 ```
 
-`run.bat` creates `.venv` and installs `requirements.txt` on first run if you skip the manual steps.
+`run.bat` creates `.venv` and installs `requirements.txt` on first run if you skip the manual steps. It starts the server and opens your browser; `python main.py --no-browser --port 8600` is handy while developing.
+
+The compiled Tailwind CSS is committed, so running from source needs no Node.js. After changing `web/index.html`, `web/app.js` or `styles/*.css`, rebuild it with `build_css.bat` (Node.js 18+, Tailwind CSS 4).
 
 Run the tests:
 
@@ -82,14 +91,18 @@ The app version lives in `src/app_paths.py` (`APP_VERSION`).
 ### Project layout
 
 ```
-main.py                 entry point
+main.py                 entry point: starts the local server and opens the browser
+web/                    browser UI: index.html, app.js, compiled Tailwind CSS (assets/app.css)
+styles/                 Tailwind sources for the app (app.css) and the website (site.css)
 config/                 formations, FM27 role/instruction catalogues, offsets.json
 src/engine/             role evaluator, formation/synergy optimizer, instructions, bench, training
 src/advisor/            squad classifier and weakest-link analysis
 src/memory/             fm.exe live reader, calibration, CSV/JSON fallback loader
-src/ui/                 PySide6 UI, themes and EN/HE translations (i18n.py)
+src/web/                local HTTP server (stdlib), JSON API and result serialisation
+src/i18n.py             English / Hebrew UI strings sent to the browser
 tests/                  pytest suite
 build/                  PyInstaller spec and Inno Setup script
+docs/                   GitHub Pages website
 probe_fm.py             developer tool for re-mapping offsets after an FM27 patch
 ```
 

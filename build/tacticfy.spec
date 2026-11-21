@@ -1,5 +1,6 @@
 # PyInstaller spec for Tacticfy: one-folder, windowed build with the app icon.
 # Equivalent CLI: pyinstaller --onedir --windowed --icon=assets/Tacticfy.ico main.py (+ the data below).
+# The .exe starts the local Tacticfy server and opens the UI in the default browser.
 # Build with build_installer.bat, or:
 #   .venv\Scripts\python.exe -m PyInstaller build\tacticfy.spec --noconfirm --distpath dist --workpath build\pyinstaller-work
 
@@ -12,6 +13,7 @@ ICON = os.path.join(ROOT, "assets", "Tacticfy.ico")
 
 datas = [
     (os.path.join(ROOT, "config"), "config"),
+    (os.path.join(ROOT, "web"), "web"),  # index.html, app.js, compiled Tailwind CSS, icons
     (ICON, "assets"),
 ]
 # Drop developer-only files from the bundled config (a local calibration overlay must never ship).
@@ -22,15 +24,8 @@ hiddenimports = (
     + ["scipy.optimize", "scipy.optimize._lsap", "psutil", "bs4"]
 )
 
-# Large Qt modules the app never uses; keeps the installer small.
-excludes = [
-    "PySide6.QtWebEngineCore", "PySide6.QtWebEngineWidgets", "PySide6.QtWebEngineQuick",
-    "PySide6.QtWebChannel", "PySide6.QtWebSockets", "PySide6.QtPdf", "PySide6.QtPdfWidgets",
-    "PySide6.Qt3DCore", "PySide6.Qt3DRender", "PySide6.Qt3DExtras", "PySide6.QtQuick", "PySide6.QtQuick3D",
-    "PySide6.QtQml", "PySide6.QtMultimedia", "PySide6.QtCharts", "PySide6.QtDataVisualization",
-    "PySide6.QtBluetooth", "PySide6.QtPositioning", "PySide6.QtSensors", "PySide6.QtSerialPort",
-    "tkinter", "matplotlib", "pytest", "IPython",
-]
+# The UI is a web page served by the stdlib HTTP server: no GUI toolkit is bundled.
+excludes = ["PySide6", "shiboken6", "tkinter", "matplotlib", "pytest", "IPython"]
 
 a = Analysis(  # noqa: F821
     [os.path.join(ROOT, "main.py")],
