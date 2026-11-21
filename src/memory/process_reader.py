@@ -210,10 +210,12 @@ class FM27ProcessReader:
             return ProcessReadResult(False, "error", f"Unexpected error reading {process_name}: {type(exc).__name__}: {exc}")
 
         players.sort(key=lambda p: -p.hidden.ca)
-        message = (f"Loaded {len(players)} players directly from {process_name} RAM (fm27_live_layout). "
+        source = "your managed team" if reader.last_source == "human_team" else "fm27_live_layout"
+        message = (f"Loaded {len(players)} players directly from {process_name} RAM ({source}). "
                    "Wage/value are not yet mapped and show defaults.")
         full_min = int(layout_cfg.get("squad_array", {}).get("full_squad_min_players", 24))
-        if reader.last_array_used_slots < full_min:
+        # Only the legacy signature array can be a partial match-day copy; the managed team is always complete.
+        if reader.last_source == "squad_array" and reader.last_array_used_slots < full_min:
             message += (f" Only a {reader.last_array_used_slots}-player match/partial squad was in memory - "
                         "open the Squad screen in FM27 and reload to get the full squad.")
         return ProcessReadResult(

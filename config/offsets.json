@@ -4,7 +4,17 @@
   "calibrated": false,
   "last_calibrated_utc": null,
   "fm27_live_layout": {
-    "_note": "Recalibrated live 2026-11-19 after FM27 patch (game_plugin.dll dated 2026-11-19 12:34) against an IGE anchor goalkeeper (CA112/PA125): squad record grew 0x1E60->0x2400 with a second marker copy at +0xA64, CA moved 0xC98->0x1230; DB object vtable_rva 0x4C40B88->0x4C9A2E8, all DB struct offsets unchanged. UID join CA-checked 40/40 on the full squad. Reader enumerates all signature arrays and prefers the one with the most used slots. Used by probe_fm.py --squad and src/memory/live_layout.py.",
+    "_note": "Primary source since 2026-11-22: the human-managed team. Every team object (vtable team_vtable_rva) has a manager object at manager_offset; only teams run by a human manager point to an object of class human_manager_vtable_rva (AI managers use a different class). The team's player vector (begin/end pointers at players_vector_offset) points to player objects whose person sub-object (player_db_object layout) sits at person_offset. This works for any save, club and user, and after switching saves without restarting fm.exe. Verified live: unique human team, 38/38 senior players with correct names. squad_array is only a fallback for layouts without human_team (it can hold a stale squad from a previous save). Recalibrated live 2026-11-19 after FM27 patch (game_plugin.dll dated 2026-11-19 12:34) against an IGE anchor goalkeeper (CA112/PA125): squad record grew 0x1E60->0x2400 with a second marker copy at +0xA64, CA moved 0xC98->0x1230; DB object vtable_rva 0x4C40B88->0x4C9A2E8, all DB struct offsets unchanged. UID join CA-checked 40/40 on the full squad. Reader enumerates all signature arrays and prefers the one with the most used slots. Used by probe_fm.py --squad and src/memory/live_layout.py.",
+    "human_team": {
+      "module": "game_plugin.dll",
+      "team_vtable_rva": "0x4E42F38",
+      "players_vector_offset": "0x38",
+      "club_offset": "0x30",
+      "manager_offset": "0x80",
+      "human_manager_vtable_rva": "0x4E2170C",
+      "person_offset": "0x148",
+      "max_players": 150
+    },
     "squad_array": {
       "locate": "signature",
       "record_stride": "0x2400",

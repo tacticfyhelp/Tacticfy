@@ -1,10 +1,17 @@
 """Live squad reader for FM27 driven by the verified `fm27_live_layout` section of offsets.json.
 
-Two-step read (see probe_fm.py for how the layout was derived):
-  1. Locate the squad record array by its in-record byte signature + fixed stride; each used record
-     carries the person UID.
-  2. Find every player database object by its vtable (game_plugin.dll + vtable_rva, ASLR-safe), join
-     on UID, and decode attributes, hidden attributes, CA/PA, DOB and names from the DB object.
+Primary source - the human-managed team (`human_team`, works for any save / club / user):
+  1. Find every team object by its vtable (game_plugin.dll + team_vtable_rva, ASLR-safe).
+  2. Keep the team whose manager object (manager_offset) is of the human-manager class. AI managers use a
+     different class, so this identifies the squad the user manages without any club or player names.
+  3. Read the team's player vector (pointers to the live player objects) and decode each player's person
+     sub-object (attributes, hidden attributes, CA/PA, DOB, names).
+  Because the players come straight from the live team, switching saves inside a running fm.exe can never
+  return players from the previous save.
+
+Legacy fallback (`squad_array`, only when `human_team` is absent from the config): locate a squad record
+array by its in-record byte signature and join it on UID with the player database objects. FM can keep
+that array alive after a save switch, so it may hold a stale squad - which is why it is no longer primary.
 
 Read-only: the process is opened with PROCESS_QUERY_INFORMATION | PROCESS_VM_READ only.
 """
@@ -132,6 +139,36 @@ class _Layout:
 
 
 @dataclass
+class _TeamLayout:
+    module: str
+    team_vtable_rva: int
+    players_vector: int
+    club: int
+    manager: int
+    human_manager_vtable_rva: int
+    person_offset: int
+    max_players: int
+
+    @classmethod
+    def from_config(cls, cfg: Optional[Dict[str, Any]]) -> Optional["_TeamLayout"]:
+        if not cfg:
+            return None
+        try:
+            return cls(
+                module=cfg.get("module", "game_plugin.dll"),
+                team_vtable_rva=_hex(cfg["team_vtable_rva"]),
+                players_vector=_hex(cfg["players_vector_offset"]),
+                club=_hex(cfg.get("club_offset", "0x30")),
+                manager=_hex(cfg["manager_offset"]),
+                human_manager_vtable_rva=_hex(cfg["human_manager_vtable_rva"]),
+                person_offset=_hex(cfg["person_offset"]),
+                max_players=int(cfg.get("max_players", 150)),
+            )
+        except KeyError as exc:
+            raise LiveReadError(f"fm27_live_layout.human_team is missing key {exc}") from exc
+
+
+@dataclass
 class LivePlayerRecord:
     """Decoded raw values for one squad player (before mapping to Player)."""
 
@@ -158,6 +195,7 @@ class FM27LiveSquadReader:
         if np is None:
             raise LiveReadError("numpy is required for the live reader.")
         self.layout = _Layout.from_config(layout_cfg)
+        self.team_layout = _TeamLayout.from_config(layout_cfg.get("human_team"))
         self.process_name = process_name
         self._k32 = ctypes.WinDLL("kernel32", use_last_error=True)
         self._k32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
@@ -170,6 +208,8 @@ class FM27LiveSquadReader:
         self._k32.CloseHandle.argtypes = [wintypes.HANDLE]
         self._h = None
         self.last_array_used_slots = 0
+        self.last_source = ""         # "human_team" or "squad_array"
+        self.last_human_teams = 0     # how many human-managed teams were found
 
     # ------------------------------------------------------------------ low-level
     def _read(self, addr: int, size: int) -> bytes:
@@ -304,6 +344,75 @@ class FM27LiveSquadReader:
             fatigue=struct.unpack_from("<h", d, L.fatigue)[0], world_rep=u16(L.world_rep),
         )
 
+    # ------------------------------------------------------------------ human-managed team (primary)
+    def _team_players(self, team: int, person_vt: int) -> List[int]:
+        """Person sub-object addresses of a team's players; [] if the vector is not a valid live player list."""
+        T = self.team_layout
+        begin, end = self._q(team + T.players_vector), self._q(team + T.players_vector + 8)
+        if not begin or end <= begin or (end - begin) % 8 or (end - begin) // 8 > T.max_players:
+            return []
+        raw = self._read(begin, end - begin)
+        if len(raw) != end - begin:
+            return []
+        out = []
+        for (ptr,) in struct.iter_unpack("<Q", raw):
+            person = ptr + T.person_offset
+            if not ptr or self._q(person) != person_vt:
+                return []  # one dangling pointer = not a live team (e.g. leftover memory from an old save)
+            out.append(person)
+        return out
+
+    def _find_human_teams(self, regions, module_base: int, person_vt: int) -> List[Tuple[int, List[int]]]:
+        """Every team whose manager is of the human-manager class, with its players (largest squad first)."""
+        T = self.team_layout
+        team_vt = module_base + T.team_vtable_rva
+        human_vt = module_base + T.human_manager_vtable_rva
+        found: List[Tuple[int, List[int]]] = []
+        for addr, data in self._chunks(regions):
+            qq = np.frombuffer(data[: len(data) // 8 * 8], "<u8")
+            for j in np.flatnonzero(qq == team_vt).tolist():
+                team = addr + j * 8
+                k = j + T.manager // 8
+                manager = int(qq[k]) if k < len(qq) else self._q(team + T.manager)
+                if not manager or self._q(manager) != human_vt:
+                    continue
+                players = self._team_players(team, person_vt)
+                if players:
+                    found.append((team, players))
+        found.sort(key=lambda tp: -len(tp[1]))
+        return found
+
+    def _read_human_team(self, pid: int, regions) -> List[LivePlayerRecord]:
+        T, L = self.team_layout, self.layout
+        team_base = self._module_base(pid, T.module)
+        person_vt = self._module_base(pid, L.module) + L.vtable_rva
+        teams = self._find_human_teams(regions, team_base, person_vt)
+        self.last_human_teams = len(teams)
+        if not teams:
+            raise LiveReadError("No team managed by a human was found in fm.exe. Load your save (not just the "
+                                "main menu) and wait until it has finished loading, or the game was patched and "
+                                "the human_team layout needs re-verifying.")
+        _, persons = teams[0]  # a manager running club + national team: the bigger squad is the club
+        out: List[LivePlayerRecord] = []
+        seen: set = set()
+        for slot, person in enumerate(persons):
+            raw = self._read(person + L.uid, 4)
+            if len(raw) != 4:
+                continue
+            uid = struct.unpack("<I", raw)[0]
+            if uid in seen:
+                continue
+            seen.add(uid)
+            rec = self._decode(slot, uid, person)
+            if 1 <= rec.ca <= 200 and 1 <= rec.pa <= 200:  # layout drift guard
+                out.append(rec)
+        if not out:
+            raise LiveReadError("The human-managed team was found but none of its players could be decoded "
+                                "(player_db_object offsets may be stale after a game patch).")
+        self.last_array_used_slots = len(out)
+        self.last_source = "human_team"
+        return out
+
     # ------------------------------------------------------------------ public
     def read_records(self, pid: int) -> List[LivePlayerRecord]:
         L = self.layout
@@ -312,6 +421,10 @@ class FM27LiveSquadReader:
             raise LiveReadError(f"OpenProcess failed (error {ctypes.get_last_error()}). Try running as Administrator.")
         try:
             regions = self._regions()
+            if self.team_layout is not None:
+                # Never fall back to the signature array here: it can still hold the previous save's squad.
+                return self._read_human_team(pid, regions)
+            self.last_source = "squad_array"
             recs = self._locate_squad(regions)
             if not recs:
                 raise LiveReadError("Squad array signature not found. Load your save and open a squad screen, "
