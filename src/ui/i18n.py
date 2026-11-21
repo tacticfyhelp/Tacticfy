@@ -1,21 +1,22 @@
-"""UI translations (English / Hebrew) for the Tacticfy web app.
+"""UI translations (English / Hebrew).
 
-The browser fetches ``client_bundle(lang)`` once per language and renders every label itself; the
-engine returns translation keys plus arguments (e.g. ``reason_key`` / ``reason_args``) so results
-can be shown in either language. Missing Hebrew keys fall back to English, missing English keys
-fall back to the key itself.
+Usage: ``tr("toolbar.load")`` or ``tr("status.imported", count=26, file="squad.html")``.
+Missing Hebrew keys fall back to English, missing English keys fall back to the key itself.
 
 Deliberately NOT translated (they must match the FM27 UI 1:1): FM27 role names, team / player
 instruction tile names and their values, mentality names, formation names and player names.
+Wrap such names with ``ltr()`` when they sit inside Hebrew right-to-left text.
 """
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Iterable
 
 LANGUAGES = ("en", "he")
 LANG_BUTTON_TEXT = "Lang: EN / עב"
 RTL_LANGUAGES = {"he"}
+
+_LRE, _RLE, _PDF = "\u202a", "\u202b", "\u202c"  # left-to-right / right-to-left embedding, pop directional formatting
 
 EN: Dict[str, str] = {
     # ---------------------------------------------------------------- main window / toolbar
@@ -468,73 +469,24 @@ ATTRIBUTES_HE: Dict[str, str] = {
     "loyalty": "נאמנות", "dirtiness": "משחק מלוכלך", "sportsmanship": "ספורטיביות", "controversy": "שנויות במחלוקת",
 }
 
-
-# ---------------------------------------------------------------- web-app-only strings
-EN.update({
-    "web.quit": "Quit",
-    "web.quit_tip": "Stop Tacticfy (the local server on this PC)",
-    "web.quit_confirm": "Stop Tacticfy? You can start it again from the Start Menu.",
-    "web.stopped.title": "Tacticfy has stopped",
-    "web.stopped.body": "You can close this tab. Start Tacticfy again from the Start Menu or the desktop shortcut.",
-    "web.offline.title": "Can't reach Tacticfy",
-    "web.offline.body": "The Tacticfy app isn't running. Start it from the Start Menu, then reload this page.",
-    "web.close": "Close",
-    "web.ok": "OK",
-    "web.cancel": "Cancel",
-    "web.loading": "Working…",
-    "web.import.drop": "Choose a squad export file (HTML, CSV or RTF) saved from FM27.",
-    "web.import.choose": "Choose file",
-    "web.calib.intro": "Enter exact values from the FM27 In-Game Editor for one or two players in your current save. "
-                       "Tacticfy scans fm.exe memory for them and saves the result as your personal offsets.",
-    "web.calib.player1": "Player 1 (required)",
-    "web.calib.player2": "Player 2 (optional cross-check)",
-    "web.calib.use_p2": "Also use player 2",
-    "web.calib.name": "Name",
-    "web.calib.age": "Age",
-    "web.calib.ca": "Current Ability (CA)",
-    "web.calib.pa": "Potential Ability (PA)",
-    "web.calib.run": "Scan fm.exe & Calibrate",
-    "web.calib.ok.title": "Calibration complete",
-    "web.calib.fail.title": "Calibration failed",
-    "web.no_squad": "No squad loaded yet.",
-    "web.error.title": "Something went wrong",
-    "web.lock.tip": "Force this player into the Best XI",
-    "web.sort_hint": "Click a column header to sort.",
-})
-
-HE.update({
-    "web.quit": "יציאה",
-    "web.quit_tip": "עצירת Tacticfy (השרת המקומי במחשב הזה)",
-    "web.quit_confirm": "לעצור את Tacticfy? אפשר להפעיל אותו שוב מתפריט התחל.",
-    "web.stopped.title": "Tacticfy נעצר",
-    "web.stopped.body": "אפשר לסגור את הכרטיסייה. להפעלה מחדש פתחו את Tacticfy מתפריט התחל או מקיצור הדרך בשולחן העבודה.",
-    "web.offline.title": "אין חיבור ל-Tacticfy",
-    "web.offline.body": "האפליקציה Tacticfy לא פועלת. הפעילו אותה מתפריט התחל ורעננו את הדף.",
-    "web.close": "סגירה",
-    "web.ok": "אישור",
-    "web.cancel": "ביטול",
-    "web.loading": "עובד…",
-    "web.import.drop": "בחרו קובץ ייצוא סגל (HTML, CSV או RTF) שנשמר מ-FM27.",
-    "web.import.choose": "בחירת קובץ",
-    "web.calib.intro": "הזינו ערכים מדויקים מעורך המשחק (IGE) של FM27 עבור שחקן אחד או שניים בשמירה הנוכחית. "
-                       "Tacticfy יסרוק את הזיכרון של fm.exe וישמור את התוצאה כהגדרות ההיסטים האישיות שלכם.",
-    "web.calib.player1": "שחקן 1 (חובה)",
-    "web.calib.player2": "שחקן 2 (אימות נוסף, רשות)",
-    "web.calib.use_p2": "להשתמש גם בשחקן 2",
-    "web.calib.name": "שם",
-    "web.calib.age": "גיל",
-    "web.calib.ca": "יכולת נוכחית (CA)",
-    "web.calib.pa": "יכולת פוטנציאלית (PA)",
-    "web.calib.run": "סריקת fm.exe וכיול",
-    "web.calib.ok.title": "הכיול הושלם",
-    "web.calib.fail.title": "הכיול נכשל",
-    "web.no_squad": "עדיין לא נטען סגל.",
-    "web.error.title": "משהו השתבש",
-    "web.lock.tip": "לחייב את השחקן הזה להיכלל בהרכב הפותח",
-    "web.sort_hint": "לחצו על כותרת עמודה כדי למיין.",
-})
-
 _TABLES: Dict[str, Dict[str, str]] = {"en": EN, "he": HE}
+_current = "en"
+
+
+def set_language(lang: str) -> None:
+    """Switch the active UI language ("en" or "he")."""
+    global _current
+    if lang not in _TABLES:
+        raise ValueError(f"Unsupported language {lang!r}; expected one of {LANGUAGES}.")
+    _current = lang
+
+
+def current_language() -> str:
+    return _current
+
+
+def is_rtl(lang: str | None = None) -> bool:
+    return (lang or _current) in RTL_LANGUAGES
 
 
 class _SafeArgs(dict):
@@ -544,37 +496,88 @@ class _SafeArgs(dict):
         return "{" + key + "}"
 
 
-def _plain(text: str) -> str:
-    # The tables were written for Qt, where "&&" renders a literal "&" in tab / group titles.
-    return text.replace("&&", "&")
+def tr(key: str, **args: object) -> str:
+    """Translate ``key`` into the active language and fill ``{placeholders}`` from ``args``.
 
-
-def is_rtl(lang: str) -> bool:
-    return lang in RTL_LANGUAGES
-
-
-def tr(key: str, lang: str = "en", **args: object) -> str:
-    """Translate ``key`` (Hebrew falls back to English, English to the key) and fill ``{placeholders}``."""
-    if lang not in _TABLES:
-        raise ValueError(f"Unsupported language {lang!r}; expected one of {LANGUAGES}.")
-    text = _TABLES[lang].get(key)
+    In Hebrew the result is wrapped in a right-to-left embedding (invisible control characters).
+    """
+    text = _TABLES[_current].get(key)
     if text is None:
         text = EN.get(key, key)
-    text = _plain(text)
-    return text.format_map(_SafeArgs(args)) if args else text
+    text = text.format_map(_SafeArgs(args)) if args else text
+    # Force a right-to-left base direction: Qt draws button / tab / header text left-to-right even in a
+    # right-to-left window, which scrambles Hebrew strings that contain Latin tokens such as "FM27".
+    return f"{_RLE}{text}{_PDF}" if is_rtl() and text else text
 
 
-def attr_name(attr: str, lang: str = "en") -> str:
-    """Display name of an attribute ("off_the_ball" -> "Off The Ball" / Hebrew)."""
-    if lang == "he" and attr in ATTRIBUTES_HE:
+def ltr(text: str) -> str:
+    """Keep an English FM27 name (role, instruction, player) readable inside right-to-left text."""
+    return f"{_LRE}{text}{_PDF}" if is_rtl() and text else text
+
+
+def tr_attr(attr: str) -> str:
+    """Display name of an attribute ("off_the_ball" -> "Off The Ball" / "תנועה ללא כדור")."""
+    if _current == "he" and attr in ATTRIBUTES_HE:
         return ATTRIBUTES_HE[attr]
     return attr.replace("_", " ").title()
 
 
-def client_bundle(lang: str) -> Dict[str, object]:
-    """Everything the browser UI needs to render ``lang``: strings, attribute names and text direction."""
-    if lang not in _TABLES:
-        raise ValueError(f"Unsupported language {lang!r}; expected one of {LANGUAGES}.")
-    strings = {key: _plain(_TABLES[lang].get(key, EN[key])) for key in EN}
-    attrs = {attr: attr_name(attr, lang) for attr in ATTRIBUTES_HE}
-    return {"lang": lang, "dir": "rtl" if is_rtl(lang) else "ltr", "strings": strings, "attrs": attrs}
+def tr_attrs(attrs: Iterable[str]) -> str:
+    return ", ".join(tr_attr(a) for a in attrs)
+
+
+def tr_category(category: str) -> str:
+    return tr(f"category.{category}") if f"category.{category}" in EN else category
+
+
+def tr_focus(focus: str) -> str:
+    return tr(f"training.focus.{focus}") if f"training.focus.{focus}" in EN else focus
+
+
+def tr_intensity(intensity: str) -> str:
+    return tr(f"training.intensity.{intensity}") if f"training.intensity.{intensity}" in EN else intensity
+
+
+def tr_style(style: str) -> str:
+    return tr(f"style.{style}") if f"style.{style}" in EN else style
+
+
+def tr_reason(key: str, args: dict) -> str:
+    """Render an engine reason (translation key + args); lists of attributes become display names."""
+    if not key:
+        return ""
+    filled = {k: (tr_attrs(v) if isinstance(v, (list, tuple)) else v) for k, v in args.items()}
+    if "role" in filled:
+        filled["role"] = ltr(str(filled["role"]))
+    return tr(key, **filled)
+
+
+def training_reason(rec) -> str:
+    """One-line reason for a TrainingRecommendation (focus attributes appended when relevant)."""
+    text = tr_reason(rec.reason_key, rec.reason_args)
+    attrs = rec.reason_args.get("attrs") or []
+    if rec.reason_key != "training.reason.focus_gap" and rec.additional_focus != "None" and attrs:
+        text += tr("training.reason.focus_suffix", attrs=tr_attrs(attrs))
+    return text
+
+
+def tr_button(key: str, **args: object) -> str:
+    """``tr()`` for QPushButton / QCheckBox text, where a single "&" would become a mnemonic underline."""
+    return tr(key, **args).replace("&", "&&")
+
+
+def bidi_row(cells: Iterable[str]) -> str:
+    """Join rich-text table cells so the first column sits on the reading-start side (right in Hebrew)."""
+    cells = list(cells)
+    return "".join(reversed(cells) if is_rtl() else cells)
+
+
+def table_open(extra: str = "") -> str:
+    """Opening <table> tag aligned to the reading-start side."""
+    align = " align='right'" if is_rtl() else ""
+    return f"<table cellspacing='0'{align}{(' ' + extra) if extra else ''}>"
+
+
+def cell_pad(v: int = 2, gap: int = 10) -> str:
+    """Cell padding with the column gap on the reading-end side."""
+    return f"padding:{v}px 0 {v}px {gap}px" if is_rtl() else f"padding:{v}px {gap}px {v}px 0"

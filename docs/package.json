@@ -1,0 +1,13 @@
+{
+  "name": "tacticfy-website",
+  "private": true,
+  "description": "Static Tailwind CSS build for the Tacticfy GitHub Pages site (docs/).",
+  "scripts": {
+    "build": "tailwindcss -i src/input.css -o assets/site.css --minify",
+    "watch": "tailwindcss -i src/input.css -o assets/site.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.4",
+    "tailwindcss": "4.3.4"
+  }
+}

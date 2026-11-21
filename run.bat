@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title Tacticfy
+title FM27 Scout and Tactical Synergy Optimizer
 cd /d "%~dp0"
 
 set "VENV_PY=.venv\Scripts\python.exe"
@@ -33,7 +33,7 @@ if not exist ".venv\.deps_installed" (
     echo installed> ".venv\.deps_installed"
 )
 
-echo [LAUNCH] Starting Tacticfy - it opens in your browser. Close the tab or click Quit to stop.
+echo [LAUNCH] Starting FM27 Scout ^& Tactical Synergy Optimizer...
 "%VENV_PY%" main.py
 set "APP_EXIT=%errorlevel%"
 if not "%APP_EXIT%"=="0" (

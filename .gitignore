@@ -56,4 +56,4 @@ desktop.ini
 *.local.*
 
 # --- Website (docs/) build tooling --------------------------------------
-node_modules/
+docs/node_modules/

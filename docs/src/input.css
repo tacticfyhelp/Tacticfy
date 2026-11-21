@@ -1,7 +1,7 @@
-/* Tailwind v4 source for the Tacticfy GitHub Pages site. Build: build_css.bat  ->  docs/assets/site.css */
+/* Tailwind v4 source for the Tacticfy website. Compile with docs/build_css.bat -> docs/assets/site.css */
 @import "tailwindcss";
 
-@source "../docs/index.html";
+@source "../index.html";
 
 @theme {
   --font-sans: "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
