@@ -255,7 +255,7 @@ class AOBCalibrator:
     def _persist_calibration(self, layout: Dict[str, Any]) -> None:
         """Write the calibration to ``offsets_path``.
 
-        In the app this is the per-user overlay (``%LOCALAPPDATA%\Tacticfy\offsets.json`` when
+        In the app this is the per-user overlay (``%LOCALAPPDATA%\\Tacticfy\\offsets.json`` when
         installed) that FM27ProcessReader merges over the bundled offsets, so the install folder is
         never written to. Only calibration keys are written; everything else is preserved.
         """

@@ -35,6 +35,13 @@ def deep_merge(base: Dict[str, Any], overlay: Dict[str, Any]) -> Dict[str, Any]:
     return merged
 
 
+# The only keys the calibration dialog (aob_calibrator._persist_calibration) writes. Anything else in
+# the user overlay - above all "fm27_live_layout" - is owned by the bundled offsets.json of the release.
+USER_OVERLAY_KEYS = frozenset({
+    "_app_version", "calibrated", "last_calibrated_utc", "discovered_layout", "player_struct",
+})
+
+
 @dataclass
 class ProcessReadResult:
     """Result returned when attempting to read squad data from fm.exe."""
@@ -59,14 +66,24 @@ class FM27ProcessReader:
         if self.offsets_path.exists():
             with self.offsets_path.open("r", encoding="utf-8") as handle:
                 base = json.load(handle)
+        else:
+            log.warning("Bundled offsets not found at %s", self.offsets_path)
         overlay = self._load_user_overlay()
-        return deep_merge(base, overlay) if overlay else base
+        merged = deep_merge(base, overlay) if overlay else base
+        live = merged.get("fm27_live_layout") or {}
+        log.info("Offsets: bundled %s (config version %s, human_team: %s); user overlay: %s",
+                 self.offsets_path, base.get("_app_version", "unstamped"),
+                 "yes" if "human_team" in live else "NO",
+                 ", ".join(sorted(overlay)) if overlay else "none")
+        return merged
 
     def _load_user_overlay(self) -> Dict[str, Any]:
-        """User calibration overlay; ignored when written by another app version.
+        """User calibration overlay, restricted to the calibration keys (``USER_OVERLAY_KEYS``).
 
-        A new release ships offsets for the current FM27 patch, so an overlay calibrated against an
-        older release must not shadow them.
+        The bundled offsets.json is always the source of truth for everything else - in particular
+        ``fm27_live_layout`` (incl. ``human_team``) - so an install upgrade always takes effect, even
+        if an older ``%LOCALAPPDATA%\\Tacticfy\\offsets.json`` is still on disk. An overlay written by
+        another app version is ignored entirely: it was calibrated against older offsets.
         """
         path = self.user_offsets_path
         if path is None or not path.exists():
@@ -83,7 +100,10 @@ class FM27ProcessReader:
             log.info("Ignoring user offsets overlay from app version %s (running %s)",
                      overlay.get("_app_version"), APP_VERSION)
             return {}
-        return overlay
+        dropped = sorted(k for k in overlay if k not in USER_OVERLAY_KEYS)
+        if dropped:
+            log.info("User offsets overlay: ignoring non-calibration keys %s (bundled values win)", dropped)
+        return {k: v for k, v in overlay.items() if k in USER_OVERLAY_KEYS}
 
     def reload_offsets(self) -> None:
         """Reload offsets.json from disk after calibration."""

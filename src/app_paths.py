@@ -15,7 +15,7 @@ from pathlib import Path
 import sys
 
 APP_NAME = "Tacticfy"
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.0.2"
 APP_ID = "Tacticfy.Tacticfy.Desktop"  # Windows AppUserModelID (taskbar icon grouping)
 GITHUB_REPO_URL = "https://github.com/tacticfyhelp/Tacticfy"
 GITHUB_ISSUES_NEW_URL = f"{GITHUB_REPO_URL}/issues/new"

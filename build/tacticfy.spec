@@ -10,6 +10,30 @@ from PyInstaller.utils.hooks import collect_submodules
 ROOT = os.path.abspath(os.path.join(SPECPATH, ".."))  # noqa: F821 - SPECPATH is injected by PyInstaller
 ICON = os.path.join(ROOT, "assets", "Tacticfy.ico")
 
+# Stamp Tacticfy.exe with APP_VERSION (Properties > Details) so the installed build is identifiable.
+import re  # noqa: E402
+
+from PyInstaller.utils.win32.versioninfo import (  # noqa: E402
+    FixedFileInfo, StringFileInfo, StringStruct, StringTable, VarFileInfo, VarStruct, VSVersionInfo,
+)
+
+with open(os.path.join(ROOT, "src", "app_paths.py"), encoding="utf-8") as _fh:
+    APP_VERSION = re.search(r'^APP_VERSION = "([0-9.]+)"', _fh.read(), re.M).group(1)
+_ver = tuple(int(x) for x in (APP_VERSION.split(".") + ["0", "0", "0"])[:4])
+VERSION_INFO = VSVersionInfo(
+    ffi=FixedFileInfo(filevers=_ver, prodvers=_ver),
+    kids=[
+        StringFileInfo([StringTable("040904B0", [
+            StringStruct("ProductName", "Tacticfy"),
+            StringStruct("FileDescription", "Tacticfy"),
+            StringStruct("ProductVersion", APP_VERSION),
+            StringStruct("FileVersion", APP_VERSION),
+            StringStruct("OriginalFilename", "Tacticfy.exe"),
+        ])]),
+        VarFileInfo([VarStruct("Translation", [0x0409, 0x04B0])]),
+    ],
+)
+
 datas = [
     (os.path.join(ROOT, "config"), "config"),
     (ICON, "assets"),
@@ -54,6 +78,7 @@ exe = EXE(  # noqa: F821
     exclude_binaries=True,  # --onedir
     name="Tacticfy",
     icon=ICON,
+    version=VERSION_INFO,
     console=False,  # --windowed
     debug=False,
     strip=False,
