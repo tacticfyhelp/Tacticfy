@@ -13,7 +13,10 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 from src.app_paths import resource_path
 from src.models.player import Player
-from src.models.tactics import AssignedSlot, TeamInstructions
+from src.models.tactics import (
+    MATCHUP_AERIAL, MATCHUP_FAST_COUNTER, MATCHUP_FAVORITE, MATCHUP_NEUTRAL, MATCHUP_UNDERDOG,
+    AssignedSlot, TeamInstructions,
+)
 
 REFERENCE_PATH = resource_path("config", "fm27_tactics_reference.json")
 NO_PI_TWEAKS = "No individual tweaks (role defaults)"
@@ -241,6 +244,7 @@ class InstructionsGenerator:
         best_xi: List[AssignedSlot],
         tactical_style: str,
         synergy_warnings: List[str],
+        matchup: str = MATCHUP_NEUTRAL,
     ) -> TeamInstructions:
         """Generate FM27 team and per-player instructions tailored to style and squad traits."""
         prof = self.build_profile(best_xi)
@@ -332,6 +336,7 @@ class InstructionsGenerator:
         if (prof.cb_reading >= STRONG and prof.cb_pace >= 12.0
                 and oop["Defensive Line"] in ("Higher", "Much Higher")):
             oop["Defensive Line Behaviour"] = "Step Up More"
+        notes.extend(self._apply_matchup(matchup, prof, ip, trans, oop))
         oop["Prevent Short GK Distribution"] = "Yes" if oop["Line of Engagement"] == "High Press" else "No"
 
         if prof.dirtiness >= 12.0:
@@ -353,6 +358,49 @@ class InstructionsGenerator:
             out_of_possession=dict(self._ordered(oop)),
             tactical_notes=notes,
         )
+
+    @staticmethod
+    def _apply_matchup(matchup: str, prof: SquadProfile, ip: Dict[str, str], trans: Dict[str, str],
+                       oop: Dict[str, str]) -> List[str]:
+        """Adapt the FM27 Team Instructions to the opponent matchup; returns the tactical notes."""
+        if matchup == MATCHUP_FAST_COUNTER:
+            # Deny space in behind: drop the line a step, retreat on loss of the ball.
+            oop["Defensive Line"] = _shift(LINE_SCALE, oop["Defensive Line"], -1)
+            oop["Defensive Line Behaviour"] = "Drop Off More"
+            if oop["Line of Engagement"] == "High Press":
+                oop["Line of Engagement"] = "Mid Block"
+            trans["Defensive Transition"] = "Regroup"
+            return [f"Matchup vs Fast Counter: Defensive Line {oop['Defensive Line']}, Drop Off More and Regroup "
+                    f"(centre-backs average {prof.cb_pace:.1f} Pace)."]
+        if matchup == MATCHUP_AERIAL:
+            oop["Cross Engagement"] = "Stop Crosses"
+            oop["Defensive Line Behaviour"] = "Drop Off More"
+            if oop["Defensive Line"] in ("Higher", "Much Higher"):
+                oop["Defensive Line"] = "Standard"
+            return ["Matchup vs Aerial / Direct: Stop Crosses and Drop Off More to win the first header in front "
+                    "of goal."]
+        if matchup == MATCHUP_FAVORITE:
+            ip["Patience"] = "Work Ball Into Box"
+            ip["Team Width"] = _shift(["Much Narrower", "Narrower", "Standard", "Wider", "Much Wider"],
+                                      ip["Team Width"], +1)
+            ip["Creative Freedom"] = "More Expressive"
+            trans["Defensive Transition"] = "Counter-Press"
+            if oop["Line of Engagement"] == "Low Block":
+                oop["Line of Engagement"] = "Mid Block"
+            return [f"Matchup Favorite vs Low Block: Work Ball Into Box, Team Width {ip['Team Width']}, More "
+                    "Expressive and Counter-Press to pin the opponent in."]
+        if matchup == MATCHUP_UNDERDOG:
+            engagement = {"High Press": "Mid Block", "Mid Block": "Low Block"}
+            oop["Line of Engagement"] = engagement.get(oop["Line of Engagement"], oop["Line of Engagement"])
+            oop["Defensive Line"] = _shift(LINE_SCALE, oop["Defensive Line"], -1)
+            oop["Trigger Press"] = _shift(TRIGGER_PRESS_SCALE, oop["Trigger Press"], -1)
+            trans["Defensive Transition"] = "Regroup"
+            trans["Attacking Transition"] = "Counter-Attack" if prof.attack_pace >= 12.0 else "Standard"
+            ip["Directness"] = _shift(["Much Shorter", "Shorter", "Standard", "More Direct", "Much More Direct"],
+                                      ip["Directness"], +1)
+            return [f"Matchup Underdog vs Stronger: {oop['Line of Engagement']}, Regroup and "
+                    f"{trans['Attacking Transition']} on the break; stay compact and disciplined."]
+        return []
 
     PHASE_ORDER = [
         "In Possession - Overview", "In Possession - Build-Up", "In Possession - Progression",

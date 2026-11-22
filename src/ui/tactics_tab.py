@@ -8,6 +8,7 @@ from PySide6.QtCore import QPointF, QRectF, Qt, QTimer
 from PySide6.QtGui import QBrush, QFont, QFontMetricsF, QGuiApplication, QPainter, QPainterPath, QPen
 from PySide6.QtWidgets import (
     QButtonGroup,
+    QCheckBox,
     QComboBox,
     QFrame,
     QHBoxLayout,
@@ -23,9 +24,12 @@ from PySide6.QtWidgets import (
 from src.engine.bench_optimizer import DEFAULT_BENCH_SIZE, SUPPORTED_BENCH_SIZES, BenchPlan
 from src.engine.instructions_gen import InstructionsGenerator
 from src.engine.training_advisor import TrainingRecommendation
-from src.models.tactics import AssignedSlot, LineupResult
+from src.models.tactics import MATCHUPS, SCORING_MODES, AssignedSlot, LineupResult, SlotExplanation
 from src.ui import i18n
-from src.ui.i18n import bidi_row, cell_pad, ltr, table_open, tr, tr_button, tr_focus, tr_intensity, tr_reason, tr_style, training_reason
+from src.ui.i18n import (
+    bidi_row, cell_pad, ltr, table_open, tr, tr_attr, tr_button, tr_driver, tr_fitness, tr_focus, tr_intensity,
+    tr_matchup, tr_reason, tr_scoring, tr_style, training_reason,
+)
 from src.ui.theme import FONT_FAMILY, LIGHT, Theme, to_qcolor
 
 
@@ -329,6 +333,19 @@ class PitchCanvas(QWidget):
             painter.setPen(to_qcolor("#ffffff"))
             painter.drawText(node_rect, Qt.AlignCenter, score_txt)
 
+            if slot.fitness_alert:  # matchday readiness warning badge (top-right of the node)
+                br = max(4.5, r * 0.42)
+                badge = QRectF(px + r * 0.72 - br, py - r * 0.72 - br, 2 * br, 2 * br)
+                painter.setBrush(QBrush(to_qcolor(t.status["warning"])))
+                painter.setPen(QPen(to_qcolor(t.node_ring), 1.2))
+                painter.drawEllipse(badge)
+                badge_font = QFont(FONT_FAMILY)
+                badge_font.setPointSizeF(max(5.5, br * 1.1))
+                badge_font.setBold(True)
+                painter.setFont(badge_font)
+                painter.setPen(to_qcolor("#ffffff"))
+                painter.drawText(badge, Qt.AlignCenter, "!")
+
             surname = slot.player.name.split()[-1] if slot.player.name.strip() else slot.slot_id
             role_txt = slot.ip_role if self.phase == "IP" else slot.oop_role
             short_role = role_txt.split("(")[0].strip()
@@ -360,8 +377,16 @@ class TacticsTab(QWidget):
     MODES = (("tactics.mode.best", "BEST"), ("tactics.mode.second", "BACKUP"),
              ("tactics.mode.dropoff", "COMPARE"), ("tactics.mode.bench", "BENCH"))
 
-    def __init__(self, parent=None, on_bench_size_changed: Optional[Callable[[int], None]] = None) -> None:
+    def __init__(
+        self,
+        parent=None,
+        on_bench_size_changed: Optional[Callable[[int], None]] = None,
+        on_context_changed: Optional[Callable[[], None]] = None,
+        explain_slot: Optional[Callable[[AssignedSlot, List[AssignedSlot]], Optional[SlotExplanation]]] = None,
+    ) -> None:
         super().__init__(parent)
+        self.on_context_changed = on_context_changed
+        self.explain_slot = explain_slot
         self.current_result: Optional[LineupResult] = None
         self.bench_plan: Optional[BenchPlan] = None
         self.training: Dict[int, TrainingRecommendation] = {}
@@ -406,6 +431,36 @@ class TacticsTab(QWidget):
             self.mode_buttons[key] = btn
         top_bar.addWidget(segmented)
         root.addLayout(top_bar)
+
+        # Compact sub-bar for the secondary match controls (keeps the main toolbar from overflowing).
+        sub_bar = QHBoxLayout()
+        sub_bar.setSpacing(6)
+        self.scoring_label = QLabel()
+        self.scoring_label.setObjectName("toolbarLabel")
+        sub_bar.addWidget(self.scoring_label)
+        self.scoring_combo = QComboBox()
+        for mode in SCORING_MODES:  # display text is translated, data stays the English engine key
+            self.scoring_combo.addItem(mode, mode)
+        self.scoring_combo.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+        sub_bar.addWidget(self.scoring_combo)
+        sub_bar.addSpacing(8)
+        self.matchup_label = QLabel()
+        self.matchup_label.setObjectName("toolbarLabel")
+        sub_bar.addWidget(self.matchup_label)
+        self.matchup_combo = QComboBox()
+        for matchup in MATCHUPS:
+            self.matchup_combo.addItem(matchup, matchup)
+        self.matchup_combo.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+        sub_bar.addWidget(self.matchup_combo)
+        sub_bar.addSpacing(8)
+        self.fitness_chk = QCheckBox()
+        self.fitness_chk.setChecked(True)  # matchday readiness on by default
+        sub_bar.addWidget(self.fitness_chk)
+        sub_bar.addStretch(1)
+        root.addLayout(sub_bar)
+        self.scoring_combo.currentIndexChanged.connect(self._on_context_control)
+        self.matchup_combo.currentIndexChanged.connect(self._on_context_control)
+        self.fitness_chk.toggled.connect(self._on_context_control)
 
         content = QHBoxLayout()
         content.setSpacing(8)
@@ -534,6 +589,23 @@ class TacticsTab(QWidget):
         self.bench_title.setText(tr("bench.title"))
         self.bench_size_label.setText(tr("bench.size"))
         self.bench_size_combo.setToolTip(tr("bench.size_tip"))
+        self.scoring_label.setText(tr("tactics.scoring"))
+        self.scoring_combo.setToolTip(tr("tactics.scoring_tip"))
+        self.scoring_label.setToolTip(tr("tactics.scoring_tip"))
+        for i in range(self.scoring_combo.count()):
+            self.scoring_combo.setItemText(i, tr_scoring(self.scoring_combo.itemData(i)))
+        self.matchup_label.setText(tr("tactics.matchup"))
+        self.matchup_combo.setToolTip(tr("tactics.matchup_tip"))
+        self.matchup_label.setToolTip(tr("tactics.matchup_tip"))
+        for i in range(self.matchup_combo.count()):
+            self.matchup_combo.setItemText(i, tr_matchup(self.matchup_combo.itemData(i)))
+        self.fitness_chk.setText(tr_button("tactics.fitness"))
+        self.fitness_chk.setToolTip(tr("tactics.fitness_tip"))
+        # Item texts changed language: let the combos re-measure (AdjustToContents caches the old width).
+        for combo in (self.scoring_combo, self.matchup_combo):
+            combo.setSizeAdjustPolicy(QComboBox.AdjustToContents)
+            combo.setMinimumWidth(combo.minimumSizeHint().width())
+            combo.updateGeometry()
         self._rerender()
 
     def _rerender(self) -> None:
@@ -570,6 +642,22 @@ class TacticsTab(QWidget):
         self.main_stack.setCurrentIndex(1 if mode == "BENCH" else 0)
         if self.current_result:
             self._apply_pitch_data()
+
+    # ------------------------------------------------------------------ match context (sub-bar)
+    def scoring_mode(self) -> str:
+        data = self.scoring_combo.currentData()
+        return data if isinstance(data, str) and data else SCORING_MODES[0]
+
+    def matchup(self) -> str:
+        data = self.matchup_combo.currentData()
+        return data if isinstance(data, str) and data else MATCHUPS[0]
+
+    def factor_in_fitness(self) -> bool:
+        return self.fitness_chk.isChecked()
+
+    def _on_context_control(self, *_args) -> None:
+        if self.on_context_changed:
+            self.on_context_changed()
 
     def _on_bench_size_combo(self, _index: int) -> None:
         size = self.bench_size_combo.currentData()
@@ -627,6 +715,11 @@ class TacticsTab(QWidget):
         if result is None:
             return
         big_tag = f"  ·  {tr('tactics.summary.important')}" if result.big_match_mode else ""
+        if result.matchup != MATCHUPS[0]:
+            big_tag += f"  ·  {escape(tr_matchup(result.matchup))}"
+        if result.excluded_count:
+            big_tag += (f"  ·  <span style='color:{t.status['warning']};'>"
+                        f"{escape(tr('tactics.summary.excluded', count=result.excluded_count))}</span>")
         pool_txt = (
             f"  ·  <span style='color:{t.text_tertiary}; font-weight:500;'>{escape(self.pool_label)}</span>"
             if self.pool_label else ""
@@ -666,6 +759,7 @@ class TacticsTab(QWidget):
             return self._section_title(title) + f"{table_open()}{''.join(rows)}</table>"
 
         html = [
+            self._formations_html(result),
             f"<p style='margin:0; font-size:12px;'><b>{tr('tactics.mentality')}</b> "
             f"<span style='color:{t.text_secondary};'>{escape(ltr(ins.mentality))}</span></p>",
             section(tr("tactics.section.ip"), ins.in_possession),
@@ -681,6 +775,26 @@ class TacticsTab(QWidget):
                 )
             )
         self.instructions_label.setText(_rtl_wrap("".join(html)))
+
+    def _formations_html(self, result: LineupResult) -> str:
+        """Top 3 evaluated formations with their Team Synergy, so the recommendation is transparent."""
+        ranking = result.formation_ranking[:3]
+        if not ranking:
+            return ""
+        t = self.theme
+        best = ranking[0][1]
+        rows = []
+        for i, (name, score) in enumerate(ranking, start=1):
+            note = tr("why.formation_best") if i == 1 else tr("why.formation_gap", gap=f"{best - score:.1f}")
+            color = t.accent_label if i == 1 else t.text_secondary
+            rows.append("<tr>" + bidi_row([
+                f"<td style='color:{color}; {cell_pad(1, 6)};'><b>{i}.</b></td>",
+                f"<td style='color:{t.text}; {cell_pad(1, 8)};'>{escape(ltr(name))}</td>",
+                f"<td style='color:{color}; {cell_pad(1, 8)};'><b>{score:.1f}</b></td>",
+                f"<td style='color:{t.text_tertiary}; padding:1px 0;'>{escape(note)}</td>",
+            ]) + "</tr>")
+        return (self._section_title(tr("why.formations")).replace("margin:8px", "margin:0px")
+                + f"{table_open()}{''.join(rows)}</table><p style='margin:4px 0 0 0;'></p>")
 
     def _render_bench(self) -> None:
         t = self.theme
@@ -704,8 +818,10 @@ class TacticsTab(QWidget):
             best = f"{b.best_cover_slot} ({b.best_cover_score:.1f})" if b.best_cover_slot else "—"
             pad = cell_pad()
             covers = ", ".join(b.covered_positions) or "—"
+            warn = (f" <span style='color:{t.status['warning']};'>⚠ {escape(tr_fitness(b.fitness_alert))}</span>"
+                    if b.fitness_alert else "")
             rows.append("<tr>" + bidi_row([
-                f"<td style='{pad}; color:{t.text};'><b>{escape(ltr(f'{i}. {b.player.name}'))}</b></td>",
+                f"<td style='{pad}; color:{t.text};'><b>{escape(ltr(f'{i}. {b.player.name}'))}</b>{warn}</td>",
                 f"<td style='{pad}; color:{t.text_secondary};'>{escape(ltr('/'.join(b.player.positions)))}</td>",
                 f"<td style='{pad}; color:{role_color};'>{escape(tr('bench.role.' + b.bench_role))}</td>",
                 f"<td style='{pad}; color:{t.text_secondary};'>{escape(ltr(covers))}</td>",
@@ -745,11 +861,15 @@ class TacticsTab(QWidget):
             f"FM27 Match Plan - {result.formation_name} | {result.tactical_style}"
             f"{' | Important Match' if result.big_match_mode else ''}",
             f"Team Synergy: {result.team_synergy_score:.1f}  |  Mentality: {ins.mentality}",
+            f"Scoring: {result.scoring_mode}  |  Matchup: {result.matchup}  |  "
+            f"Factor in Fitness: {'On' if result.factor_in_fitness else 'Off'}",
+            "Top formations: " + ", ".join(f"{n} ({s:.1f})" for n, s in result.formation_ranking[:3]),
             "",
             "BEST XI (In Possession role / Out of Possession role)",
         ]
         for a in result.best_xi:
-            lines.append(f"  {a.slot_id:<5} {a.player.name:<26} {a.ip_role} / {a.oop_role}  ({a.combined_score:.1f})")
+            fit = f"  [{tr_fitness_en(a.fitness_alert)}]" if a.fitness_alert else ""
+            lines.append(f"  {a.slot_id:<5} {a.player.name:<26} {a.ip_role} / {a.oop_role}  ({a.combined_score:.1f}){fit}")
             if a.individual_instructions:
                 lines.append(f"        PI: {', '.join(a.individual_instructions)}")
         for title, items in (
@@ -822,9 +942,74 @@ class TacticsTab(QWidget):
             f"{escape(ltr(slot.ip_role))}</span> ({slot.ip_score:.1f})<br>"
             f"{tr('tactics.detail.oop')}: <span style='color:{t.text};'>{escape(ltr(slot.oop_role))}</span> "
             f"({slot.oop_score:.1f})<br>"
-            f"{tr('tactics.detail.displacement')}: {slot.transition_distance:.1f}m<br>{alert_html}</p>"
+            f"{tr('tactics.detail.displacement')}: {slot.transition_distance:.1f}m<br>{alert_html}<br>"
+            f"{self._fitness_html(slot)}</p>"
+            + self._why_html(slot)
             + self._section_title(tr("tactics.detail.pi")) + pi_html + training_html
         ))
+
+    def _fitness_html(self, slot: AssignedSlot) -> str:
+        t, p = self.theme, slot.player
+        if p.match_sharpness is None and p.fatigue is None:
+            return f"<span style='color:{t.text_tertiary};'>{escape(tr('fitness.unknown'))}</span>"
+        detail = escape(tr("fitness.detail", pct=p.match_sharpness if p.match_sharpness is not None else "—",
+                           fatigue=p.fatigue if p.fatigue is not None else "—"))
+        if slot.fitness_alert:
+            head = f"<span style='color:{t.status['warning']};'><b>⚠ {escape(tr_fitness(slot.fitness_alert))}</b></span>"
+        else:
+            head = f"<span style='color:{t.status['success']};'>{escape(tr('fitness.ready'))}</span>"
+        penalty = ""
+        if slot.fitness_factor < 0.995:
+            penalty = (f"<br><span style='color:{t.text_tertiary};'>"
+                       f"{escape(tr('fitness.penalty', pct=f'{(1 - slot.fitness_factor) * 100:.1f}'))}</span>")
+        return f"{head}<br><span style='color:{t.text_tertiary};'>{detail}</span>{penalty}"
+
+    def _displayed_lineup(self) -> List[AssignedSlot]:
+        result = self.current_result
+        if result is None:
+            return []
+        if self.view_mode == "BACKUP" and result.backup_xi:
+            return result.backup_xi
+        return result.best_xi
+
+    def _why_html(self, slot: AssignedSlot) -> str:
+        """'Why this player?': top contributing attributes and the runner-up comparison."""
+        if self.explain_slot is None:
+            return ""
+        try:
+            exp = self.explain_slot(slot, self._displayed_lineup())
+        except Exception:  # noqa: BLE001 - an explanation must never break the pitch view
+            return ""
+        if exp is None:
+            return ""
+        t = self.theme
+        attrs = " · ".join(
+            f"{escape(tr_attr(c.attr))} <b>{c.value}</b>" for c in exp.top_attributes[:5]
+        )
+        parts = [self._section_title(tr("why.title")),
+                 f"<p style='margin:1px 0; color:{t.text_secondary};'>{escape(tr('why.top_attrs'))}: {attrs}</p>"]
+        if exp.runner_up is None:
+            parts.append(f"<p style='margin:1px 0; color:{t.text_tertiary};'>{escape(tr('why.no_runner_up'))}</p>")
+            return "".join(parts)
+        key = "why.beat" if exp.gap >= 0 else "why.locked"
+        parts.append(
+            f"<p style='margin:1px 0; color:{t.text};'>{escape(tr(key, name=ltr(exp.runner_up.name), score=f'{exp.score:.1f}', runner=f'{exp.runner_up_score:.1f}', gap=f'{exp.gap:.1f}'))}</p>"
+        )
+        if exp.drivers:
+            drivers = ", ".join(f"{d.delta:+.1f} {tr_driver(d.attrs)}" for d in exp.drivers)
+            line = tr("why.drivers", drivers=drivers)
+        else:
+            line = tr("why.no_drivers")
+        parts.append(f"<p style='margin:1px 0; color:{t.accent_label};'>{escape(line)}</p>")
+        return "".join(parts)
+
+
+def tr_fitness_en(alert) -> str:
+    """Fitness alert in English for the clipboard plan (FM27 English on purpose)."""
+    if not alert:
+        return ""
+    key, args = alert
+    return i18n.EN.get(key, key).format(**args)
 
 
 def _rtl_wrap(html: str) -> str:

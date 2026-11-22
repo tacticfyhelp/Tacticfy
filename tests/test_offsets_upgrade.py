@@ -103,6 +103,7 @@ class TestBundledConfigIsCurrent(unittest.TestCase):
             written = json.loads(path.read_text(encoding="utf-8"))
         self.assertTrue(set(written) <= USER_OVERLAY_KEYS, set(written) - USER_OVERLAY_KEYS)
 
+    @unittest.skipUnless((ROOT / "build" / "installer.iss").exists(), "installer script not in this working copy")
     def test_installer_blocks_downgrades_and_stamps_version(self) -> None:
         iss = (ROOT / "build" / "installer.iss").read_text(encoding="utf-8")
         self.assertIn("VersionInfoVersion", iss)

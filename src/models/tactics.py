@@ -14,6 +14,17 @@ TACTICAL_STYLES = [
     "Defensive Solidity",
 ]
 
+SCORING_FM_META = "FM Meta"
+SCORING_BALANCED = "Balanced"
+SCORING_MODES = [SCORING_FM_META, SCORING_BALANCED]  # FM Meta is the default
+
+MATCHUP_NEUTRAL = "Neutral"
+MATCHUP_FAVORITE = "Favorite vs Low Block"
+MATCHUP_UNDERDOG = "Underdog vs Stronger"
+MATCHUP_FAST_COUNTER = "vs Fast Counter"
+MATCHUP_AERIAL = "vs Aerial / Direct"
+MATCHUPS = [MATCHUP_NEUTRAL, MATCHUP_FAVORITE, MATCHUP_UNDERDOG, MATCHUP_FAST_COUNTER, MATCHUP_AERIAL]
+
 
 @dataclass
 class RoleDefinition:
@@ -75,6 +86,9 @@ class AssignedSlot:
     # Display-only symmetric formation coordinates (fall back to role coords when None).
     ip_display: Optional[Tuple[float, float]] = None
     oop_display: Optional[Tuple[float, float]] = None
+    # Matchday readiness: (translation key, args) when the player is unsharp / tired, and the score multiplier.
+    fitness_alert: Optional[Tuple[str, Dict[str, object]]] = None
+    fitness_factor: float = 1.0
 
 
 @dataclass
@@ -102,6 +116,47 @@ class LineupResult:
     synergy_warnings: List[str]
     dropoff_by_slot: Dict[str, float]
     instructions: TeamInstructions
+    scoring_mode: str = "FM Meta"
+    matchup: str = "Neutral"
+    factor_in_fitness: bool = True
+    # Every evaluated formation with its Team Synergy score, best first ("why this formation?").
+    formation_ranking: List[Tuple[str, float]] = field(default_factory=list)
+    excluded_count: int = 0
+
+
+@dataclass
+class AttributeContribution:
+    """One attribute's share of a player's weighted role score."""
+
+    attr: str
+    value: int
+    weight: float
+    share: float  # % of the weighted attribute score
+
+
+@dataclass
+class ScoreDriver:
+    """Why the selected player beat the runner-up: score points gained from one attribute group."""
+
+    attrs: Tuple[str, ...]   # attribute keys, or a pseudo key such as "ca" / "familiarity" / "fitness"
+    delta: float             # >0 favours the selected player, <0 favours the runner-up
+
+
+@dataclass
+class SlotExplanation:
+    """'Why this XI?' breakdown for one slot."""
+
+    slot_id: str
+    player: Player
+    score: float
+    top_attributes: List[AttributeContribution]
+    runner_up: Optional[Player] = None
+    runner_up_score: float = 0.0
+    drivers: List[ScoreDriver] = field(default_factory=list)
+
+    @property
+    def gap(self) -> float:
+        return round(self.score - self.runner_up_score, 1)
 
 
 @dataclass

@@ -23,6 +23,15 @@ Tacticfy reads your squad straight from a running FM27 save (or from an imported
 - **Individual training** – role focus, additional focus and training intensity for every player, based on attribute gaps, age, potential and personality.
 - **Squad transfer advisor** – Core / Rotation / Loan / Sell High / Sell, plus the weakest link in your starting XI.
 
+### New in v1.1.0
+
+- **FM Meta vs Balanced scoring** – the default *FM Meta* mode adds extra weight to the attributes the FM match engine rewards most (Pace, Acceleration, Jumping Reach, Anticipation, Concentration, Dribbling, Agility, Balance, Decisions; for goalkeepers Reflexes, Agility, One On Ones, Aerial Reach) on top of each role's own attributes. *Balanced* uses the role weights only.
+- **"Why this XI?"** – click any player on the pitch to see their top contributing attributes and why they beat the runner-up for that slot (for example *+1.8 Current Ability, +0.9 Pace/Acceleration, +0.8 Decisions*). The Match Plan now opens with the **Top 3 evaluated formations** and their synergy scores, so you can see why the recommended shape won.
+- **Live fitness & Exclude** – Match Sharpness and Fatigue are read live from FM27. With **Factor in Fitness** on (the default), unsharp or tired players are penalized and flagged with a warning on the pitch and the bench. Tick **Exclude** next to **Lock XI** on the Squad tab to leave out injured, suspended or rested players – Best XI, Second XI and bench re-optimize instantly.
+- **Opponent Matchup** – *Neutral*, *Favorite vs Low Block*, *Underdog vs Stronger*, *vs Fast Counter* or *vs Aerial / Direct*. Each one re-weights what Tacticfy looks for in defenders, midfielders and attackers (faster centre-backs vs a fast counter, better Jumping Reach vs a direct side, more Flair/Dribbling/Off The Ball/Vision vs a low block, more Work Rate/Positioning/Concentration as the underdog) and adapts the FM27 Team Instructions.
+
+Scoring Mode, Matchup and Factor in Fitness sit in a compact bar on the Tactics tab and re-optimize as soon as you change them.
+
 Tacticfy is a native Windows desktop application (PySide6 / Qt) with Apple-style Light and Dark themes. It runs entirely on your PC – no browser and no account, and nothing is sent online unless you choose to report a bug.
 
 Languages: English and Hebrew (right-to-left) – switch any time with the **Lang: EN / עב** button next to **Theme**.

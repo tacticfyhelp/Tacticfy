@@ -477,6 +477,12 @@ def positions_from_familiarity(fam: Dict[str, int]) -> List[str]:
     return playable or [ranked[0][2]]
 
 
+def sharpness_percent(raw: int, layout_cfg: Dict[str, Any]) -> int:
+    """Match Sharpness as 0-100 % (FM27 stores it as 0..sharpness_max, 10000 = fully match sharp)."""
+    full = int(layout_cfg["player_db_object"].get("sharpness_max", 10000)) or 10000
+    return max(0, min(100, round(100 * int(raw) / full)))
+
+
 def record_to_player(rec: LivePlayerRecord, layout_cfg: Dict[str, Any], today: dt.date) -> Player:
     attr_order = layout_cfg["player_db_object"]["attribute_order"]
     pers_order = layout_cfg["player_db_object"]["personality_order"]
@@ -506,5 +512,7 @@ def record_to_player(rec: LivePlayerRecord, layout_cfg: Dict[str, Any], today: d
         is_gk=positions[0] == "GK",
         visible=visible,
         hidden=hidden,
+        match_sharpness=sharpness_percent(rec.sharpness, layout_cfg),
+        fatigue=int(rec.fatigue),
         # wage_weekly / market_value / contract_expiry_year: not yet mapped in memory -> model defaults
     )

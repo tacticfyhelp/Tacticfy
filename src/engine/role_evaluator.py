@@ -3,10 +3,13 @@
 import json
 import math
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from src.models.player import Player
-from src.models.tactics import RoleDefinition
+from src.models.tactics import (
+    MATCHUP_AERIAL, MATCHUP_FAST_COUNTER, MATCHUP_FAVORITE, MATCHUP_NEUTRAL, MATCHUP_UNDERDOG, MATCHUPS,
+    SCORING_FM_META, SCORING_MODES, AttributeContribution, RoleDefinition,
+)
 
 
 # FM27 In Possession roles that hug the touchline want the foot on the same side (left-footed on the left).
@@ -35,6 +38,60 @@ POSITION_ROLE_GROUPS = {
 }
 
 
+PRIMARY_WEIGHT, SECONDARY_WEIGHT = 3.0, 1.5
+
+# FM Meta layer: attributes the FM match engine rewards far beyond their role weight (fast, physically
+# dominant, mentally sharp players). Added on top of the role's own primary / secondary weights.
+META_WEIGHTS_OUTFIELD: Dict[str, float] = {
+    "pace": 1.6, "acceleration": 1.6, "jumping_reach": 0.9, "anticipation": 1.2, "concentration": 0.8,
+    "dribbling": 0.8, "agility": 0.8, "balance": 0.6, "decisions": 1.1,
+}
+META_WEIGHTS_GK: Dict[str, float] = {"reflexes": 1.6, "agility": 1.2, "one_on_ones": 1.2, "aerial_reach": 1.0}
+
+# Pitch line of an FM position, used by the Matchup layer.
+POSITION_LINE = {
+    "GK": "GK", "DC": "CB", "DL": "FB", "DR": "FB", "WBL": "FB", "WBR": "FB",
+    "DM": "MID", "MC": "MID", "ML": "MID", "MR": "MID",
+    "AML": "ATT", "AMR": "ATT", "AMC": "ATT", "ST": "ATT",
+}
+# Opponent matchup layer: extra attribute weight per pitch line.
+MATCHUP_WEIGHTS: Dict[str, Dict[str, Dict[str, float]]] = {
+    MATCHUP_FAST_COUNTER: {
+        "CB": {"pace": 2.5, "acceleration": 2.0, "anticipation": 1.0, "positioning": 0.5},
+        "FB": {"pace": 1.5, "acceleration": 1.5, "positioning": 0.5},
+        "MID": {"positioning": 0.8, "anticipation": 0.8, "work_rate": 0.5},
+        "GK": {"rushing_out": 1.0, "one_on_ones": 1.0},
+    },
+    MATCHUP_AERIAL: {
+        "CB": {"jumping_reach": 2.5, "heading": 2.0, "strength": 1.5, "bravery": 0.5},
+        "FB": {"jumping_reach": 0.8, "heading": 0.8},
+        "MID": {"jumping_reach": 0.6, "strength": 0.8, "heading": 0.6},
+        "GK": {"aerial_reach": 2.0, "command_of_area": 1.5, "punching": 0.5},
+    },
+    MATCHUP_FAVORITE: {
+        "ATT": {"flair": 1.5, "dribbling": 1.5, "off_the_ball": 1.5, "vision": 1.0, "technique": 1.0, "composure": 0.8},
+        "MID": {"vision": 1.5, "passing": 1.0, "technique": 0.8, "flair": 0.6},
+        "FB": {"crossing": 1.0, "dribbling": 0.5},
+    },
+    MATCHUP_UNDERDOG: {
+        "ATT": {"work_rate": 1.5, "teamwork": 0.8, "concentration": 0.6},
+        "MID": {"work_rate": 1.5, "positioning": 1.5, "concentration": 1.2, "teamwork": 0.8},
+        "FB": {"work_rate": 1.2, "positioning": 1.2, "concentration": 1.0},
+        "CB": {"positioning": 1.5, "concentration": 1.5, "anticipation": 0.8},
+        "GK": {"concentration": 1.0},
+    },
+}
+
+# Matchday readiness (live fm.exe values; unknown values are never penalized).
+SHARPNESS_OK = 75          # % - no penalty at or above
+SHARPNESS_ALERT = 50       # % - warn below
+SHARPNESS_MAX_PENALTY = 0.10
+FATIGUE_OK = 300           # FM27 fatigue - no penalty at or below
+FATIGUE_ALERT = 500        # warn above
+FATIGUE_FULL = 1000        # maximum penalty reached here
+FATIGUE_MAX_PENALTY = 0.15
+
+
 def side_for_position(position: str) -> str:
     """Return the flank ("L"/"R"/"C") implied by an FM position code."""
     if position in LEFT_POSITIONS:
@@ -50,6 +107,84 @@ class RoleEvaluator:
     def __init__(self, ip_roles_path: Path, oop_roles_path: Path) -> None:
         self.ip_roles: Dict[str, RoleDefinition] = self._load_roles(ip_roles_path, is_ip=True)
         self.oop_roles: Dict[str, RoleDefinition] = self._load_roles(oop_roles_path, is_ip=False)
+        # Scoring context shared by the optimizer, bench and advisors (see configure()).
+        self.scoring_mode: str = SCORING_FM_META
+        self.matchup: str = MATCHUP_NEUTRAL
+        self.factor_in_fitness: bool = True
+        self._weights_cache: Dict[tuple, Dict[str, float]] = {}
+
+    def configure(self, scoring_mode: str = SCORING_FM_META, matchup: str = MATCHUP_NEUTRAL,
+                  factor_in_fitness: bool = True) -> None:
+        """Set the Scoring Mode (FM Meta / Balanced), opponent Matchup and Factor in Fitness toggle."""
+        if scoring_mode not in SCORING_MODES:
+            raise ValueError(f"Unknown scoring mode {scoring_mode!r}; expected one of {SCORING_MODES}.")
+        if matchup not in MATCHUPS:
+            raise ValueError(f"Unknown matchup {matchup!r}; expected one of {MATCHUPS}.")
+        self.scoring_mode, self.matchup, self.factor_in_fitness = scoring_mode, matchup, factor_in_fitness
+
+    # ------------------------------------------------------------------ attribute weights
+    def attribute_weights(self, role: RoleDefinition, slot_position: str) -> Dict[str, float]:
+        """Role weights (primary 3.0 / secondary 1.5) plus the FM Meta and Matchup layers for this slot."""
+        key = (role.name, role.slot_group, tuple(role.primary), tuple(role.secondary), slot_position,
+               self.scoring_mode, self.matchup)
+        cached = self._weights_cache.get(key)
+        if cached is not None:
+            return cached
+        weights: Dict[str, float] = {}
+        for attr in role.primary:
+            weights[attr] = weights.get(attr, 0.0) + PRIMARY_WEIGHT
+        for attr in role.secondary:
+            weights[attr] = weights.get(attr, 0.0) + SECONDARY_WEIGHT
+        is_gk_slot = slot_position == "GK" or role.slot_group == "GK"
+        if self.scoring_mode == SCORING_FM_META:
+            for attr, w in (META_WEIGHTS_GK if is_gk_slot else META_WEIGHTS_OUTFIELD).items():
+                weights[attr] = weights.get(attr, 0.0) + w
+        line = "GK" if is_gk_slot else POSITION_LINE.get(slot_position, "MID")
+        for attr, w in MATCHUP_WEIGHTS.get(self.matchup, {}).get(line, {}).items():
+            weights[attr] = weights.get(attr, 0.0) + w
+        self._weights_cache[key] = weights
+        return weights
+
+    def attribute_contributions(self, player: Player, ip_role: str, oop_role: str, slot_position: str,
+                                ip_share: float = 0.58) -> List[AttributeContribution]:
+        """Blend of the IP and OOP weighted attributes, largest contribution first (for 'Why this XI?')."""
+        blended: Dict[str, float] = {}
+        for role, share in ((self.ip_roles[ip_role], ip_share), (self.oop_roles[oop_role], 1.0 - ip_share)):
+            weights = self.attribute_weights(role, slot_position)
+            total = sum(weights.values()) or 1.0
+            for attr, w in weights.items():
+                blended[attr] = blended.get(attr, 0.0) + share * w / total
+        points = {a: w * player.visible.get(a, 10) for a, w in blended.items()}
+        total_points = sum(points.values()) or 1.0
+        out = [AttributeContribution(a, player.visible.get(a, 10), round(blended[a], 4),
+                                     round(100.0 * p / total_points, 1)) for a, p in points.items()]
+        out.sort(key=lambda c: -c.share)
+        return out
+
+    # ------------------------------------------------------------------ matchday readiness
+    def fitness_status(self, player: Player) -> Tuple[float, Optional[Tuple[str, Dict[str, object]]]]:
+        """(score multiplier, alert) from live Match Sharpness / Fatigue; (1.0, None) when unknown or disabled."""
+        sharp, fatigue = player.match_sharpness, player.fatigue
+        factor = 1.0
+        if sharp is not None and sharp < SHARPNESS_OK:
+            factor -= SHARPNESS_MAX_PENALTY * (SHARPNESS_OK - max(0, sharp)) / SHARPNESS_OK
+        if fatigue is not None and fatigue > FATIGUE_OK:
+            factor -= FATIGUE_MAX_PENALTY * min(1.0, (fatigue - FATIGUE_OK) / (FATIGUE_FULL - FATIGUE_OK))
+        low_sharp = sharp is not None and sharp < SHARPNESS_ALERT
+        tired = fatigue is not None and fatigue > FATIGUE_ALERT
+        alert: Optional[Tuple[str, Dict[str, object]]] = None
+        if low_sharp and tired:
+            alert = ("fitness.alert.both", {"pct": sharp, "fatigue": fatigue})
+        elif low_sharp:
+            alert = ("fitness.alert.sharpness", {"pct": sharp})
+        elif tired:
+            alert = ("fitness.alert.fatigue", {"fatigue": fatigue})
+        if not self.factor_in_fitness:
+            return 1.0, alert
+        return round(factor, 4), alert
+
+    def fitness_factor(self, player: Player) -> float:
+        return self.fitness_status(player)[0]
 
     @staticmethod
     def _load_roles(path: Path, is_ip: bool) -> Dict[str, RoleDefinition]:
@@ -70,20 +205,12 @@ class RoleEvaluator:
             )
         return roles
 
-    @staticmethod
-    def _weighted_attribute_score(player: Player, primary: List[str], secondary: List[str]) -> float:
-        total_w = 0.0
-        weighted_sum = 0.0
-        for attr in primary:
-            w = 3.0
-            weighted_sum += player.visible.get(attr, 10) * w
-            total_w += w
-        for attr in secondary:
-            w = 1.5
-            weighted_sum += player.visible.get(attr, 10) * w
-            total_w += w
+    def _weighted_attribute_score(self, player: Player, role: RoleDefinition, slot_position: str) -> float:
+        weights = self.attribute_weights(role, slot_position)
+        total_w = sum(weights.values())
         if total_w == 0:
             return 50.0
+        weighted_sum = sum(player.visible.get(attr, 10) * w for attr, w in weights.items())
         return (weighted_sum / (total_w * 20.0)) * 100.0
 
     @staticmethod
@@ -128,7 +255,7 @@ class RoleEvaluator:
         ``side`` is the slot flank ("L"/"R"/"C"); when omitted it is derived from ``slot_position``.
         """
         role = self.ip_roles[role_name]
-        attr_score = self._weighted_attribute_score(player, role.primary, role.secondary)
+        attr_score = self._weighted_attribute_score(player, role, slot_position)
         ca_norm = min(100.0, (player.hidden.ca / 175.0) * 100.0)
         fam = player.familiarity_for(slot_position)
         raw = (attr_score * 0.75 + ca_norm * 0.25) * fam
@@ -155,7 +282,7 @@ class RoleEvaluator:
     ) -> float:
         """Score a player (0-100) for an Out of Possession defensive/pressing role."""
         role = self.oop_roles[role_name]
-        attr_score = self._weighted_attribute_score(player, role.primary, role.secondary)
+        attr_score = self._weighted_attribute_score(player, role, slot_position)
         ca_norm = min(100.0, (player.hidden.ca / 175.0) * 100.0)
         fam = player.familiarity_for(slot_position)
         raw = (attr_score * 0.80 + ca_norm * 0.20) * fam

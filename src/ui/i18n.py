@@ -180,7 +180,7 @@ EN: Dict[str, str] = {
     "squad.search": "Search name, position, role or advisor status…",
     "squad.count": "{total} players",
     "squad.count_filtered": "{shown} of {total} players",
-    "squad.lock_hint": "Check 'Lock XI' to force a player into the Best XI.",
+    "squad.lock_hint": "Check 'Lock XI' to force a player in, or 'Exclude' to leave out injured, suspended or rested players.",
     "squad.wage_unmapped": "Wage is not yet mapped for the live FM27 reader.",
     # ---------------------------------------------------------------- advisor tab
     "advisor.weakest.title": "Weakest Link && Priority Transfer Target Profile",
@@ -233,6 +233,49 @@ EN: Dict[str, str] = {
     "training.reason.ceiling": "At his ceiling (CA {ca} / PA {pa}): maintain, no extra focus.",
     "training.reason.complete": "Already well rounded for {role}.",
     "training.reason.focus_suffix": " Focus: {attrs}.",
+    # ---------------------------------------------------------------- v1.1 tactics sub-bar
+    "tactics.scoring": "Scoring",
+    "tactics.scoring_tip": "FM Meta adds extra weight to the attributes the FM match engine rewards most (Pace, Acceleration, Jumping Reach, Anticipation, Concentration, Dribbling, Agility, Balance, Decisions; for goalkeepers Reflexes, Agility, One On Ones, Aerial Reach). Balanced uses the role weights only.",
+    "scoring.FM Meta": "FM Meta",
+    "scoring.Balanced": "Balanced",
+    "tactics.matchup": "Matchup",
+    "tactics.matchup_tip": "Opponent context: re-weights defender / midfield / attacker attributes and adapts the FM27 Team Instructions",
+    "matchup.Neutral": "Neutral",
+    "matchup.Favorite vs Low Block": "Favorite vs Low Block",
+    "matchup.Underdog vs Stronger": "Underdog vs Stronger",
+    "matchup.vs Fast Counter": "vs Fast Counter",
+    "matchup.vs Aerial / Direct": "vs Aerial / Direct",
+    "tactics.fitness": "Factor in Fitness",
+    "tactics.fitness_tip": "Penalize players with low Match Sharpness or high Fatigue (live fm.exe values) for matchday readiness",
+    "tactics.summary.excluded": "{count} excluded",
+    "fitness.alert.sharpness": "Low Match Sharpness ({pct}%)",
+    "fitness.alert.fatigue": "Fatigued (Fatigue {fatigue})",
+    "fitness.alert.both": "Low Match Sharpness ({pct}%) and fatigued (Fatigue {fatigue})",
+    "fitness.detail": "Match Sharpness {pct}% · Fatigue {fatigue}",
+    "fitness.ready": "Match Fitness: ready",
+    "fitness.unknown": "Match Fitness: not available for this squad source",
+    "fitness.penalty": "Fitness penalty: -{pct}% to this player's score",
+    # ---------------------------------------------------------------- v1.1 "Why this XI?"
+    "why.title": "Why this player?",
+    "why.top_attrs": "Top contributing attributes",
+    "why.beat": "Beat {name}: {score} vs {runner} (+{gap})",
+    "why.locked": "Locked in over {name}: {score} vs {runner} ({gap})",
+    "why.drivers": "Edge: {drivers}",
+    "why.no_drivers": "Edge: overall profile (no single attribute group stands out)",
+    "why.no_runner_up": "No other available player for this slot.",
+    "why.driver.ca": "Current Ability",
+    "why.driver.familiarity": "Positional Familiarity",
+    "why.driver.consistency": "Consistency",
+    "why.driver.fitness": "Match Fitness",
+    "why.driver.foot": "Footedness",
+    "why.formations": "Top evaluated formations",
+    "why.formation_gap": "{gap} behind",
+    "why.formation_best": "recommended",
+    # ---------------------------------------------------------------- v1.1 squad availability
+    "squad.col.exclude": "Exclude",
+    "squad.exclude_tip": "Leave this player out (injured, suspended or rested): Best XI, Second XI and bench re-optimize instantly",
+    "squad.lock_tip": "Force this player into the Best XI",
+    "status.too_many_excluded": "Only {count} available players after exclusions: at least 11 are needed. Un-exclude some players.",
 }
 
 HE: Dict[str, str] = {
@@ -395,7 +438,7 @@ HE: Dict[str, str] = {
     "squad.search": "חיפוש לפי שם, עמדה, תפקיד או המלצה…",
     "squad.count": "{total} שחקנים",
     "squad.count_filtered": "{shown} מתוך {total} שחקנים",
-    "squad.lock_hint": "סמן 'נעילה' כדי לכפות שחקן בהרכב הטוב.",
+    "squad.lock_hint": "סמן 'נעילה' כדי לכפות שחקן בהרכב, או 'החרגה' כדי להוציא שחקן פצוע, מורחק או במנוחה.",
     "squad.wage_unmapped": "השכר עדיין לא ממופה בקורא החי של FM27.",
     # ---------------------------------------------------------------- advisor tab
     "advisor.weakest.title": "החוליה החלשה ופרופיל יעד העברה עדיף",
@@ -448,6 +491,49 @@ HE: Dict[str, str] = {
     "training.reason.ceiling": "בתקרה שלו (CA {ca} / PA {pa}): שימור, ללא מיקוד נוסף.",
     "training.reason.complete": "כבר מעוגל היטב לתפקיד {role}.",
     "training.reason.focus_suffix": " מיקוד: {attrs}.",
+    # ---------------------------------------------------------------- v1.1 tactics sub-bar
+    "tactics.scoring": "ניקוד",
+    "tactics.scoring_tip": "מטא FM מוסיף משקל לתכונות שמנוע המשחק של FM מתגמל במיוחד (מהירות, האצה, ניתור, צפייה מראש, ריכוז, כדרור, זריזות, שיווי משקל, החלטות; לשוערים רפלקסים, זריזות, אחד על אחד, טווח אווירי). מאוזן משתמש במשקלי התפקיד בלבד.",
+    "scoring.FM Meta": "מטא FM",
+    "scoring.Balanced": "מאוזן",
+    "tactics.matchup": "יריב",
+    "tactics.matchup_tip": "הקשר היריב: משנה את משקלי התכונות של הגנה / קישור / התקפה ומתאים את הוראות הקבוצה של FM27",
+    "matchup.Neutral": "ניטרלי",
+    "matchup.Favorite vs Low Block": "פייבוריט מול בלוק נמוך",
+    "matchup.Underdog vs Stronger": "אנדרדוג מול יריב חזק",
+    "matchup.vs Fast Counter": "מול מתפרצות מהירות",
+    "matchup.vs Aerial / Direct": "מול משחק אווירי / ישיר",
+    "tactics.fitness": "שקלול כושר",
+    "tactics.fitness_tip": "הורדת ניקוד לשחקנים עם חדות משחק נמוכה או עייפות גבוהה (ערכים חיים מ-fm.exe) לשם מוכנות ליום המשחק",
+    "tactics.summary.excluded": "{count} הוחרגו",
+    "fitness.alert.sharpness": "חדות משחק נמוכה ({pct}%)",
+    "fitness.alert.fatigue": "עייף (עייפות {fatigue})",
+    "fitness.alert.both": "חדות משחק נמוכה ({pct}%) ועייף (עייפות {fatigue})",
+    "fitness.detail": "חדות משחק {pct}% · עייפות {fatigue}",
+    "fitness.ready": "כושר משחק: מוכן",
+    "fitness.unknown": "כושר משחק: לא זמין למקור הסגל הזה",
+    "fitness.penalty": "קנס כושר: {pct}% פחות בניקוד של השחקן",
+    # ---------------------------------------------------------------- v1.1 "Why this XI?"
+    "why.title": "למה השחקן הזה?",
+    "why.top_attrs": "התכונות התורמות ביותר",
+    "why.beat": "גבר על {name}: {score} מול {runner} (+{gap})",
+    "why.locked": "ננעל במקום {name}: {score} מול {runner} ({gap})",
+    "why.drivers": "יתרון: {drivers}",
+    "why.no_drivers": "יתרון: פרופיל כללי (אין קבוצת תכונות אחת בולטת)",
+    "why.no_runner_up": "אין שחקן זמין אחר לעמדה הזו.",
+    "why.driver.ca": "יכולת נוכחית",
+    "why.driver.familiarity": "היכרות עם העמדה",
+    "why.driver.consistency": "עקביות",
+    "why.driver.fitness": "כושר משחק",
+    "why.driver.foot": "רגל דומיננטית",
+    "why.formations": "המערכים המובילים שנבחנו",
+    "why.formation_gap": "{gap} מאחור",
+    "why.formation_best": "מומלץ",
+    # ---------------------------------------------------------------- v1.1 squad availability
+    "squad.col.exclude": "החרגה",
+    "squad.exclude_tip": "הוצאת השחקן (פצוע, מורחק או במנוחה): ההרכב הטוב, ההרכב השני והספסל מחושבים מחדש מיד",
+    "squad.lock_tip": "כפיית השחקן בהרכב הטוב",
+    "status.too_many_excluded": "רק {count} שחקנים זמינים לאחר ההחרגות: נדרשים לפחות 11. בטל החרגה לחלק מהשחקנים.",
 }
 
 ATTRIBUTES_HE: Dict[str, str] = {
@@ -536,6 +622,30 @@ def tr_focus(focus: str) -> str:
 
 def tr_intensity(intensity: str) -> str:
     return tr(f"training.intensity.{intensity}") if f"training.intensity.{intensity}" in EN else intensity
+
+
+def tr_scoring(mode: str) -> str:
+    return tr(f"scoring.{mode}") if f"scoring.{mode}" in EN else mode
+
+
+def tr_matchup(matchup: str) -> str:
+    return tr(f"matchup.{matchup}") if f"matchup.{matchup}" in EN else matchup
+
+
+def tr_driver(attrs) -> str:
+    """Display label of a 'Why this XI?' driver: an attribute group ("Pace/Acceleration") or a pseudo key."""
+    attrs = tuple(attrs)
+    if len(attrs) == 1 and f"why.driver.{attrs[0]}" in EN:
+        return tr(f"why.driver.{attrs[0]}")
+    return "/".join(tr_attr(a) for a in attrs)
+
+
+def tr_fitness(alert) -> str:
+    """Render a fitness alert (translation key, args) or an empty string."""
+    if not alert:
+        return ""
+    key, args = alert
+    return tr(key, **args)
 
 
 def tr_style(style: str) -> str:

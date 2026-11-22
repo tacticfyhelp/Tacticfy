@@ -1,7 +1,7 @@
 """Player data models covering visible, hidden, contract, and positional attributes."""
 
 from dataclasses import dataclass, field
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -110,6 +110,11 @@ class Player:
     visible: PlayerVisibleAttributes = field(default_factory=PlayerVisibleAttributes)
     hidden: PlayerHiddenAttributes = field(default_factory=PlayerHiddenAttributes)
     locked_starter: bool = False
+    # Matchday availability: excluded players (injured / suspended / rested) never enter Best XI, Second XI or bench.
+    excluded: bool = False
+    # Live fitness from fm.exe; None = unknown (demo squad / file import) and never penalized.
+    match_sharpness: Optional[int] = None   # 0-100 %
+    fatigue: Optional[int] = None           # FM27 fatigue (jadedness) value, higher = more tired
 
     @property
     def pa_ca_delta(self) -> int:

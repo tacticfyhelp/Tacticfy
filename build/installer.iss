@@ -1,5 +1,5 @@
 ; Inno Setup 6 script: packages the PyInstaller one-folder build (dist\Tacticfy) into dist\TacticfySetup.exe.
-; Build with build_installer.bat, or: iscc /DAppVersion=1.0.2 build\installer.iss
+; Build with build_installer.bat, or: iscc /DAppVersion=1.1.0 build\installer.iss
 
 #ifndef AppVersion
   #error Pass the version: iscc /DAppVersion=x.y.z (build_installer.bat reads it from srcpp_paths.py)

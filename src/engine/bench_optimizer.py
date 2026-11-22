@@ -51,6 +51,8 @@ class BenchPlayer:
     best_cover_slot: str = ""
     best_cover_score: float = 0.0
     impact: float = 0.0
+    # Matchday readiness warning from live Match Sharpness / Fatigue: (translation key, args).
+    fitness_alert: Optional[tuple] = None
 
 
 @dataclass
@@ -118,7 +120,7 @@ class BenchOptimizer:
             return 0.0
         ip = self.evaluator.score_ip_role(player, slot.ip_role, slot.position, side=slot.side)
         oop = self.evaluator.score_oop_role(player, slot.oop_role, slot.position)
-        return round(ip * IP_WEIGHT + oop * OOP_WEIGHT, 1)
+        return round((ip * IP_WEIGHT + oop * OOP_WEIGHT) * self.evaluator.fitness_factor(player), 1)
 
     @staticmethod
     def _utility(p: Player) -> float:
@@ -130,7 +132,8 @@ class BenchOptimizer:
         if size < 1:
             raise ValueError("Bench size must be at least 1.")
         starter_ids = {a.player.player_id for a in lineup.best_xi}
-        pool = [p for p in squad if p.player_id not in starter_ids]
+        # Excluded players (injured / suspended / rested) are never named on the bench.
+        pool = [p for p in squad if p.player_id not in starter_ids and not p.excluded]
         gk_slots = [a for a in lineup.best_xi if a.position == "GK"]
         outfield_slots = [a for a in lineup.best_xi if a.position != "GK"]
 
@@ -148,11 +151,13 @@ class BenchOptimizer:
             ranked = sorted(
                 keepers,
                 key=lambda p: -(self.evaluator.score_ip_role(p, gk_slot.ip_role, "GK") * IP_WEIGHT
-                                + self.evaluator.score_oop_role(p, gk_slot.oop_role, "GK") * OOP_WEIGHT),
+                                + self.evaluator.score_oop_role(p, gk_slot.oop_role, "GK") * OOP_WEIGHT)
+                * self.evaluator.fitness_factor(p),
             )
             gk = ranked[0]
             chosen.append(BenchPlayer(gk, "backup_gk", [gk_slot.slot_id], ["GK"], gk_slot.slot_id,
-                                      self.cover_score(gk, gk_slot), impact_score(gk)))
+                                      self.cover_score(gk, gk_slot), impact_score(gk),
+                                      fitness_alert=self.evaluator.fitness_status(gk)[1]))
             chosen_ids.add(gk.player_id)
 
         best_cover = {s.slot_id: 0.0 for s in outfield_slots}
@@ -173,6 +178,7 @@ class BenchOptimizer:
                 best_cover_slot=best.slot_id if best else "",
                 best_cover_score=c[best.slot_id] if best else 0.0,
                 impact=impact_score(p),
+                fitness_alert=self.evaluator.fitness_status(p)[1],
             ))
             chosen_ids.add(p.player_id)
             for sid, val in c.items():

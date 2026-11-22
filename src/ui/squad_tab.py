@@ -43,7 +43,7 @@ class SquadTab(QWidget):
 
     # Column translation keys (display headers come from i18n).
     COLUMN_KEYS = [
-        "squad.col.lock", "squad.col.name", "squad.col.age", "squad.col.pos", "squad.col.ca", "squad.col.pa",
+        "squad.col.lock", "squad.col.exclude", "squad.col.name", "squad.col.age", "squad.col.pos", "squad.col.ca", "squad.col.pa",
         "squad.col.headroom", "squad.col.prof", "squad.col.amb", "squad.col.imp", "squad.col.pres",
         "squad.col.cons", "squad.col.inj", "squad.col.wage", "squad.col.best_ip", "squad.col.ip",
         "squad.col.best_oop", "squad.col.oop", "squad.col.role_focus", "squad.col.add_focus",
@@ -52,9 +52,17 @@ class SquadTab(QWidget):
     # Backward-compatible English header list.
     COLUMNS = [EN[k] for k in COLUMN_KEYS]
 
-    def __init__(self, on_lock_changed: Callable[[int, bool], None], parent=None) -> None:
+    def __init__(
+        self,
+        on_lock_changed: Callable[[int, bool], None],
+        parent=None,
+        on_exclude_changed: Optional[Callable[[int, bool], None]] = None,
+    ) -> None:
         super().__init__(parent)
         self.on_lock_changed = on_lock_changed
+        self.on_exclude_changed = on_exclude_changed
+        # player_id -> (Lock XI checkbox, Exclude checkbox) of the rows currently shown.
+        self._toggles: Dict[int, tuple] = {}
         self.theme: Theme = LIGHT
         self._classified: List[PlayerClassification] = []
         self._training: Dict[int, TrainingRecommendation] = {}
@@ -119,7 +127,7 @@ class SquadTab(QWidget):
         for row in range(total):
             haystack = " ".join(
                 self.table.item(row, col).text().lower()
-                for col in range(1, self.table.columnCount())
+                for col in range(2, self.table.columnCount())
                 if self.table.item(row, col) is not None
             )
             visible = all(term in haystack for term in terms)
@@ -136,6 +144,35 @@ class SquadTab(QWidget):
         self.count_label.setStyleSheet(f"color: {theme.text_secondary}; font-size: 11px;")
         if self._classified:
             self.update_squad(self._classified)
+
+    def _checkbox_cell(self, row: int, col: int, checked: bool, tip: str) -> QCheckBox:
+        container = QWidget()
+        layout = QHBoxLayout(container)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setAlignment(Qt.AlignCenter)
+        chk = QCheckBox()
+        chk.setChecked(checked)
+        chk.setToolTip(tip)
+        layout.addWidget(chk)
+        self.table.setCellWidget(row, col, container)
+        return chk
+
+    def _on_toggle(self, player_id: int, kind: str, on: bool) -> None:
+        """Lock XI and Exclude are mutually exclusive: checking one clears the other."""
+        lock_chk, excl_chk = self._toggles.get(player_id, (None, None))
+        other = excl_chk if kind == "lock" else lock_chk
+        if on and other is not None and other.isChecked():
+            other.blockSignals(True)
+            other.setChecked(False)
+            other.blockSignals(False)
+            if kind == "lock" and self.on_exclude_changed:
+                self.on_exclude_changed(player_id, False)
+            elif kind == "exclude":
+                self.on_lock_changed(player_id, False)
+        if kind == "lock":
+            self.on_lock_changed(player_id, on)
+        elif self.on_exclude_changed:
+            self.on_exclude_changed(player_id, on)
 
     def _intensity_color(self, intensity: str) -> str:
         t = self.theme
@@ -165,22 +202,18 @@ class SquadTab(QWidget):
         intensity_order = {"Double Intensity": 0, "Normal": 1, "Half Intensity": 2}
         pos_order = ["GK", "DL", "DC", "DR", "WBL", "WBR", "DM", "ML", "MC", "MR", "AML", "AMC", "AMR", "ST"]
 
+        self._toggles = {}
+        dim = to_qcolor(t.text_tertiary)
         for row_idx, item in enumerate(classified):
             p = item.player
             rec = self._training.get(p.player_id)
 
-            # Lock checkbox widget
-            chk_container = QWidget()
-            chk_layout = QHBoxLayout(chk_container)
-            chk_layout.setContentsMargins(0, 0, 0, 0)
-            chk_layout.setAlignment(Qt.AlignCenter)
-            chk = QCheckBox()
-            chk.setChecked(p.locked_starter)
-            chk.stateChanged.connect(
-                lambda state, pid=p.player_id: self.on_lock_changed(pid, state == Qt.Checked.value)
-            )
-            chk_layout.addWidget(chk)
-            self.table.setCellWidget(row_idx, 0, chk_container)
+            # Lock XI and Exclude checkboxes (mutually exclusive)
+            lock_chk = self._checkbox_cell(row_idx, self.col("squad.col.lock"), p.locked_starter, tr("squad.lock_tip"))
+            excl_chk = self._checkbox_cell(row_idx, self.col("squad.col.exclude"), p.excluded, tr("squad.exclude_tip"))
+            lock_chk.toggled.connect(lambda on, pid=p.player_id: self._on_toggle(pid, "lock", on))
+            excl_chk.toggled.connect(lambda on, pid=p.player_id: self._on_toggle(pid, "exclude", on))
+            self._toggles[p.player_id] = (lock_chk, excl_chk)
 
             wage_txt = f"{p.wage_weekly:,}" if show_wage else "—"
             first_pos = p.positions[0] if p.positions else ""
@@ -235,6 +268,11 @@ class SquadTab(QWidget):
                 if rec is not None and key in ("squad.col.role_focus", "squad.col.add_focus", "squad.col.intensity"):
                     cell.setToolTip(training_reason(rec))
 
+                if p.excluded:
+                    cell.setForeground(dim)
+                    font = cell.font()
+                    font.setStrikeOut(key == "squad.col.name")
+                    cell.setFont(font)
                 cell.setFlags(cell.flags() & ~Qt.ItemIsEditable)
                 self.table.setItem(row_idx, self.col(key), cell)
 

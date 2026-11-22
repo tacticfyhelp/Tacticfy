@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import List, Optional
 
-from PySide6.QtCore import QObject, QSize, Qt, QThread, Signal, Slot
+from PySide6.QtCore import QObject, QSize, Qt, QThread, QTimer, Signal, Slot
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices, QIcon, QPainter
 from PySide6.QtWidgets import (
@@ -30,12 +30,12 @@ from src.advisor.squad_classifier import SquadClassifier
 from src.advisor.weakest_link import WeakestLinkAnalyzer
 from src.engine.bench_optimizer import DEFAULT_BENCH_SIZE, BenchOptimizer, BenchPlan
 from src.engine.role_evaluator import RoleEvaluator
-from src.engine.synergy_optimizer import SynergyOptimizer
+from src.engine.synergy_optimizer import SynergyOptimizer, eligible_players
 from src.engine.training_advisor import TrainingAdvisor
 from src.memory.fallback_loader import generate_sample_squad, load_squad_from_file
 from src.memory.process_reader import FM27ProcessReader, ProcessReadResult
 from src.models.player import Player
-from src.models.tactics import TACTICAL_STYLES, LineupResult
+from src.models.tactics import TACTICAL_STYLES, AssignedSlot, LineupResult, SlotExplanation
 from src.ui import i18n
 from src.ui.advisor_tab import AdvisorTab
 from src.ui.calibration_dialog import CalibrationDialog
@@ -251,8 +251,12 @@ class MainWindow(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
         self.tabs.tabBar().setDrawBase(False)
-        self.tactics_tab = TacticsTab(on_bench_size_changed=self.on_bench_size_changed)
-        self.squad_tab = SquadTab(self.on_player_lock_changed)
+        self.tactics_tab = TacticsTab(
+            on_bench_size_changed=self.on_bench_size_changed,
+            on_context_changed=self._on_controls_changed,
+            explain_slot=self.explain_slot,
+        )
+        self.squad_tab = SquadTab(self.on_player_lock_changed, on_exclude_changed=self.on_player_exclude_changed)
         self.advisor_tab = AdvisorTab()
         for page in (self.tactics_tab, self.squad_tab, self.advisor_tab):
             page.setObjectName("tabPage")
@@ -489,7 +493,38 @@ class MainWindow(QMainWindow):
         for p in self.squad:
             if p.player_id == player_id:
                 p.locked_starter = is_locked
+                if is_locked:
+                    p.excluded = False
                 break
+        self._schedule_reoptimize()
+
+    def on_player_exclude_changed(self, player_id: int, is_excluded: bool) -> None:
+        """Exclude (injured / suspended / rested) re-optimizes Best XI, Second XI and bench immediately."""
+        for p in self.squad:
+            if p.player_id == player_id:
+                p.excluded = is_excluded
+                if is_excluded:
+                    p.locked_starter = False
+                break
+        log.info("Player availability changed: %d excluded", sum(p.excluded for p in self.squad))
+        self._schedule_reoptimize()
+
+    def _schedule_reoptimize(self) -> None:
+        # Deferred: the squad table is rebuilt by the optimization, so never rebuild it inside its own signal.
+        if not getattr(self, "_reopt_pending", False):
+            self._reopt_pending = True
+            QTimer.singleShot(0, self._run_scheduled_reoptimize)
+
+    def _run_scheduled_reoptimize(self) -> None:
+        self._reopt_pending = False
+        if len(self.squad) >= 11 and not self.is_loading():
+            self.run_optimization()
+
+    def explain_slot(self, slot: AssignedSlot, lineup: List[AssignedSlot]) -> Optional[SlotExplanation]:
+        """'Why this XI?' for a clicked pitch node."""
+        if self.last_result is None:
+            return None
+        return self.optimizer.explain_slot(self.last_result, slot, self.squad, lineup)
 
     # ------------------------------------------------------------------ optimization
     def _on_controls_changed(self, *_args) -> None:
@@ -520,12 +555,21 @@ class MainWindow(QMainWindow):
             self.on_load_clicked(interactive=False)
             return
 
+        available = len(eligible_players(self.squad))
+        if available < 11:
+            # The table already shows the new checkbox state; keep the last valid lineup on screen.
+            self._set_status("status.too_many_excluded", "warning", count=available)
+            return
+
         formation_filter = self.current_formation_filter()
         result = self.optimizer.optimize(
             self.squad,
             tactical_style=self.current_style(),
             big_match_mode=self.big_match_chk.isChecked(),
             formation_filter=formation_filter,
+            scoring_mode=self.tactics_tab.scoring_mode(),
+            matchup=self.tactics_tab.matchup(),
+            factor_in_fitness=self.tactics_tab.factor_in_fitness(),
         )
         self.last_result = result
         classified = self.classifier.classify(self.squad, result)

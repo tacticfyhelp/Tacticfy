@@ -1,5 +1,5 @@
 {
-  "_app_version": "1.0.2",
+  "_app_version": "1.1.0",
   "game_version": "FM27_UNAUTHENTICATED_TEMPLATE",
   "process_name": "fm.exe",
   "calibrated": false,
@@ -97,6 +97,8 @@
       ],
       "sharpness_u16": "0x110",
       "fatigue_s16": "0x112",
+      "sharpness_max": 10000,
+      "_fitness_note": "Verified read-only on a live save: sharpness_u16 is 0..10000 (Match Sharpness), fatigue_s16 is a signed jadedness value (higher = more tired). Condition / Morale / Injury are NOT mapped: +0x114 looks like Condition (0..10000) but is unverified against the FM27 UI.",
       "world_reputation_u16": "0x11A",
       "ca_u16": "0x11C",
       "pa_u16": "0x11E",
